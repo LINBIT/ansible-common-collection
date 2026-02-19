@@ -1,12 +1,12 @@
-proxmox_public_repo
-===================
+linbit_ppa
+==========
 
-Configure the LINBIT public DRBD repository for Proxmox VE.
+Add the LINBIT Launchpad PPA for Ubuntu nodes.
 
 Requirements
 ------------
 
-Debian-based system (Proxmox VE). Requires Debian 10 or later.
+Ubuntu.
 
 Role Variables
 --------------
@@ -22,12 +22,12 @@ Example Playbook
 ----------------
 
 ```yaml
-- name: Add LINBIT repo for Proxmox
-  hosts: proxmox_nodes
+- name: Add LINBIT PPA
+  hosts: ubuntu_nodes
   become: true
   tasks:
     - ansible.builtin.include_role:
-        name: linbit.common.proxmox_public_repo
+        name: linbit.common.linbit_ppa
 ```
 
 License
