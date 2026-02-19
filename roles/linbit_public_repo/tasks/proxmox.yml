@@ -10,13 +10,13 @@
   ansible.builtin.blockinfile:
     path: /etc/apt/sources.list.d/linbit.list
     block: |
-      deb [signed-by={{ lb_gpg_path }}] {{ lb_proxmox_repo }} {{ pve_version }} drbd-9
+      deb [signed-by={{ lb_gpg_path }}] {{ lb_proxmox_repo }} proxmox-{{ pve_version }} drbd-9
     owner: root
     group: root
     mode: '644'
     create: true
   vars:
-    pve_version: "proxmox-{{ ansible_distribution_major_version | int - 4 }}"
+    pve_version: "{{ ansible_distribution_major_version | int - 4 }}"
   notify: Refresh apt cache
 
 - name: Flush handlers
