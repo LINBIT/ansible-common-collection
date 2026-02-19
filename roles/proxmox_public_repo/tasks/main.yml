@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: MIT-0
+---
+# tasks file for proxmox_public_repo
+- name: Verify host OS is Debian 10+
+  ansible.builtin.assert:
+    that:
+      - "ansible_os_family == 'Debian'"
+      - "ansible_distribution_major_version | int >= 10"
+    msg: "LINBIT public Proxmox repo only supports Debian 10 or higher"
+
+- name: Install linbit-keyring package (apt signing key)
+  ansible.builtin.apt:
+    deb: "{{ lb_keyring_package_url }}"
+    state: present
+    allow_unauthenticated: true
+
+- name: Add LINBIT drbd-9 public Proxmox repo
+  ansible.builtin.blockinfile:
+    path: /etc/apt/sources.list.d/linbit.list
+    block: |
+      deb [signed-by={{ lb_gpg_path }}] {{ lb_proxmox_repo }} {{ pve_version }} drbd-9
+    owner: root
+    group: root
+    mode: '644'
+    create: true
+  vars:
+    pve_version: "{{ debian_to_pve[ansible_distribution_major_version] }}"
+  notify: Refresh apt for LINBIT public repo
+
+# Flush now, so software package install tasks have GPG keys
+- name: Flush handlers for proxmox_public_repo
+  ansible.builtin.meta: flush_handlers

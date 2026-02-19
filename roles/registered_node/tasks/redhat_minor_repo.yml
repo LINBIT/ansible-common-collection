@@ -1,0 +1,11 @@
+# Use specific RHEL repositories based on "minor release" version
+- name: Use specific RHEL version for DRBD repos
+  ansible.builtin.replace:
+    path: "{{ repo_file }}"
+    after: "{{ item.replace_after }}"
+    before: "{{ item.replace_before }}"
+    regexp: '/rhel.*/'
+    replace: "/rhel{{ ansible_distribution_version }}/"
+  loop:
+    - { replace_after: '\[drbd-9\]', replace_before: 'drbd-9/\$basearch' }
+    - { replace_after: '\[drbd-9\.0\]', replace_before: 'drbd-9\.0/\$basearch' }
