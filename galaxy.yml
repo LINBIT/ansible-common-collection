@@ -8,7 +8,7 @@ authors:
 - Matt Kereczman <matt@linbit.com>
 - Michael Troutman <michael@linbit.com>
 - Devin Vance <devin@linbit.com>
-description: LINBIT portal node registration, Ubuntu PPA, and Proxmox public repo setup
+description: LINBIT portal node registration and public repo setup for Ubuntu and Proxmox VE
 license:
 - MIT
 tags:
@@ -17,6 +17,7 @@ tags:
 - proxmox
 - ubuntu
 - ppa
+- apt
 dependencies: {}
 repository: https://gitlab.at.linbit.com/ansible-collections/linbit.common
 documentation: https://linbit.com/user-guides-and-product-documentation/

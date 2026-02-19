@@ -1,6 +1,9 @@
-# SPDX-License-Identifier: MIT-0
+# SPDX-License-Identifier: MIT
 ---
-# defaults file for proxmox_public_repo
+# Ubuntu PPA
+lb_ppa: 'ppa:linbit/linbit-drbd9-stack'
+
+# Proxmox public repo
 debian_to_pve:
   '10': proxmox-6
   '11': proxmox-7
@@ -9,7 +12,5 @@ debian_to_pve:
   '14': proxmox-10
 
 lb_keyring_package_url: 'https://packages.linbit.com/public/linbit-keyring.deb'
-
 lb_proxmox_repo: 'http://packages.linbit.com/public/'
-
 lb_gpg_path: '/etc/apt/trusted.gpg.d/linbit-keyring.gpg'

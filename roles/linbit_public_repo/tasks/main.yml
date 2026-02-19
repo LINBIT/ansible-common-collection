@@ -1,0 +1,25 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Check for Proxmox PVE environment
+  ansible.builtin.stat:
+    path: /etc/pve
+  register: linbit_public_repo_pve
+
+- name: Assert supported OS (Ubuntu or Proxmox VE)
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution | lower == 'ubuntu' or
+        (ansible_distribution | lower == 'debian' and linbit_public_repo_pve.stat.exists)
+    msg: >
+      linbit_public_repo supports Ubuntu and Proxmox VE (Debian) only.
+      Plain Debian without Proxmox VE is not supported.
+
+- name: Configure LINBIT public repo (Proxmox VE)
+  ansible.builtin.include_tasks: proxmox.yml
+  when:
+    - ansible_distribution | lower == 'debian'
+    - linbit_public_repo_pve.stat.exists
+
+- name: Configure LINBIT PPA (Ubuntu)
+  ansible.builtin.include_tasks: ubuntu.yml
+  when: ansible_distribution | lower == 'ubuntu'
