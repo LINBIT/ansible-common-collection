@@ -2,7 +2,7 @@
 galaxy_info:
   author: LINBIT
   description: Add the LINBIT drbd9-stack Launchpad PPA for Ubuntu nodes
-  license: GPL-2.0-or-later
+  license: MIT
   min_ansible_version: 2.9
 
 dependencies: []
