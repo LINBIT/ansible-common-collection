@@ -19,7 +19,7 @@ tags:
 - ppa
 - apt
 dependencies:
-  community.general: '>=10.4.0,<12.0.0'
+  community.general: '>=10.4.0' # use <12.0.0 upper bound for RHEL/EL 8 compatibility
 repository: https://gitlab.at.linbit.com/ansible-collections/linbit.common
 documentation: https://linbit.com/user-guides-and-product-documentation/
 homepage: https://linbit.com
