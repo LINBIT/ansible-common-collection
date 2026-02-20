@@ -1,3 +1,15 @@
 # Ansible Collection - linbit.common
 
-Documentation for the collection.
+Handles LINBIT portal node registration and public LINBIT package repository setup.
+This collection has no dependencies on other LINBIT collections.
+
+## Roles
+
+| Role | Description |
+|---|---|
+| `registered_node` | Register nodes with the LINBIT subscription portal (`my.linbit.com`) |
+| `linbit_public_repo` | Configure the LINBIT public APT repository for Ubuntu (PPA) and Proxmox VE |
+
+## Dependencies
+
+None.
