@@ -38,7 +38,7 @@ Example Playbook
   hosts: all
   become: true
   tasks:
-    - ansible.builtin.include_role:
+    - ansible.builtin.import_role:
         name: linbit.common.linbit_public_repo
 ```
 

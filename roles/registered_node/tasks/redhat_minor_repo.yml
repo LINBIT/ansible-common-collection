@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # Use specific RHEL repositories based on "minor release" version
 - name: Use specific RHEL version for DRBD repos
   ansible.builtin.replace:
