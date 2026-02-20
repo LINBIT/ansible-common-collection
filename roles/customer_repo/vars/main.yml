@@ -1,0 +1,4 @@
+# SPDX-License-Identifier: MIT
+---
+# vars file for customer_repo
+customer_repo_gpg_handler: "Refresh GPG keys ({{ ansible_os_family }})"

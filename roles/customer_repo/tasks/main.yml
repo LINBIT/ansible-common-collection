@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 ---
-# tasks file for registered_node
+# tasks file for customer_repo
 - name: Load OS-specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
@@ -17,13 +17,13 @@
     dest: '/tmp/linbit-manage-node.py'
     mode: '644'
   retries: 3
-  register: registered_node_script_downloaded
+  register: customer_repo_script_downloaded
 
 - name: Register nodes
   when:
-    registered_node_force_register | bool or
-    registered_node_script_downloaded.changed
-  notify: "{{ registered_node_gpg_handler }}"
+    customer_repo_force_register | bool or
+    customer_repo_script_downloaded.changed
+  notify: "{{ customer_repo_gpg_handler }}"
   block:
     # Enables all available LINBIT repos available to distro
     - name: Register nodes using linbit-manage-node.py - all repos enabled
@@ -61,14 +61,14 @@
   ansible.builtin.include_tasks:
     redhat_minor_repo.yml
   when:
-    - registered_node_use_rhel_minor_version is defined
-    - registered_node_use_rhel_minor_version | bool
+    - customer_repo_use_rhel_minor_version is defined
+    - customer_repo_use_rhel_minor_version | bool
     - ansible_distribution | lower == 'redhat'
 
 ### FOR STAGING
 - name: Configure LINBIT staging repository using regex
   ansible.builtin.lineinfile:
-    path: "{{ repo_file }}"
+    path: "{{ customer_repo_file }}"
     regexp: '(https\://packages\.linbit\.com/[a-zA-Z0-9]+/)'
     line: '\1staging/'
     backrefs: true

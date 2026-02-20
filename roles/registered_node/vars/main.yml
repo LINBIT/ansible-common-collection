@@ -1,4 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-# vars file for registered_node
-registered_node_gpg_handler: "Refresh GPG keys ({{ ansible_os_family }})"

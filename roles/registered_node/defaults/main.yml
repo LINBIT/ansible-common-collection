@@ -1,6 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-# defaults file for registered_node
-registered_node_force_register: false
-
-registered_node_use_rhel_minor_version: false

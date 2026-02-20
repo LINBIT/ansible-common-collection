@@ -7,7 +7,7 @@ This collection has no dependencies on other LINBIT collections.
 
 | Role | Description |
 |---|---|
-| `registered_node` | Register nodes with the LINBIT subscription portal (`my.linbit.com`) |
+| `customer_repo` | Register nodes with the LINBIT subscription portal (`my.linbit.com`) |
 | `public_repo` | Configure the LINBIT public APT repository for Ubuntu (PPA) and Proxmox VE |
 
 ## Dependencies

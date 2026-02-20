@@ -2,7 +2,7 @@
 # Use specific RHEL repositories based on "minor release" version
 - name: Use specific RHEL version for DRBD repos
   ansible.builtin.replace:
-    path: "{{ repo_file }}"
+    path: "{{ customer_repo_file }}"
     after: "{{ item.replace_after }}"
     before: "{{ item.replace_before }}"
     regexp: '/rhel.*/'
