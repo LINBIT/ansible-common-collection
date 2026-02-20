@@ -1,5 +1,5 @@
-linbit_public_repo
-==================
+public_repo
+===========
 
 Configure the LINBIT public package repository for Ubuntu and Proxmox VE.
 
@@ -20,10 +20,10 @@ See `defaults/main.yml`.
 
 | Variable | Default | Description |
 |---|---|---|
-| `lb_ppa` | `ppa:linbit/linbit-drbd9-stack` | Launchpad PPA for Ubuntu |
-| `lb_keyring_package_url` | `https://packages.linbit.com/public/linbit-keyring.deb` | LINBIT keyring package URL |
-| `lb_proxmox_repo` | `http://packages.linbit.com/public/` | LINBIT public APT repo URL |
-| `lb_gpg_path` | `/etc/apt/trusted.gpg.d/linbit-keyring.gpg` | GPG key path |
+| `public_repo_ppa` | `ppa:linbit/linbit-drbd9-stack` | Launchpad PPA for Ubuntu |
+| `public_repo_keyring_package_url` | `https://packages.linbit.com/public/linbit-keyring.deb` | LINBIT keyring package URL |
+| `public_repo_proxmox_repo` | `http://packages.linbit.com/public/` | LINBIT public APT repo URL |
+| `public_repo_gpg_path` | `/etc/apt/trusted.gpg.d/linbit-keyring.gpg` | GPG key path |
 
 Dependencies
 ------------
@@ -39,7 +39,7 @@ Example Playbook
   become: true
   tasks:
     - ansible.builtin.import_role:
-        name: linbit.common.linbit_public_repo
+        name: linbit.common.public_repo
 ```
 
 License

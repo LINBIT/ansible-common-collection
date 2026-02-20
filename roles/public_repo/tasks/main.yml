@@ -5,7 +5,7 @@
     that:
       - ansible_distribution | lower in ['debian', 'ubuntu']
     msg: >
-      linbit_public_repo supports Debian and Ubuntu only.
+      public_repo supports Debian (Proxmox VE) and Ubuntu only.
 
 - name: Configure LINBIT public repo (Proxmox VE)
   ansible.builtin.include_tasks: proxmox.yml

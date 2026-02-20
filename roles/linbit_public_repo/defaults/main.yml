@@ -1,8 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-# Ubuntu PPA
-lb_ppa: 'ppa:linbit/linbit-drbd9-stack'
-
-lb_keyring_package_url: 'https://packages.linbit.com/public/linbit-keyring.deb'
-lb_proxmox_repo: 'http://packages.linbit.com/public/'
-lb_gpg_path: '/etc/apt/trusted.gpg.d/linbit-keyring.gpg'

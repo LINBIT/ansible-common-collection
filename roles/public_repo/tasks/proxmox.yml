@@ -2,7 +2,7 @@
 ---
 - name: Install linbit-keyring package (apt signing key)
   ansible.builtin.apt:
-    deb: "{{ lb_keyring_package_url }}"
+    deb: "{{ public_repo_keyring_package_url }}"
     state: present
     allow_unauthenticated: true
 
@@ -10,7 +10,7 @@
   ansible.builtin.blockinfile:
     path: /etc/apt/sources.list.d/linbit.list
     block: |
-      deb [signed-by={{ lb_gpg_path }}] {{ lb_proxmox_repo }} proxmox-{{ pve_version }} drbd-9
+      deb [signed-by={{ public_repo_gpg_path }}] {{ public_repo_proxmox_repo }} proxmox-{{ pve_version }} drbd-9
     owner: root
     group: root
     mode: '644'

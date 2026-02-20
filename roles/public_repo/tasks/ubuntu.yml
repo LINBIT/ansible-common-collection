@@ -7,7 +7,7 @@
 
 - name: Add LINBIT drbd9-stack PPA
   ansible.builtin.apt_repository:
-    repo: "{{ lb_ppa }}"
+    repo: "{{ public_repo_ppa }}"
     state: present
   notify: Refresh apt cache
 
