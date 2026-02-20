@@ -3,4 +3,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - linbit_public_repo
+    - public_repo
