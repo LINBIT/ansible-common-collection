@@ -11,7 +11,7 @@ galaxy_info:
       versions:
         - jammy
         - noble
-        - resolute
+        # - resolute
     - name: Debian
       versions:
         - bookworm
