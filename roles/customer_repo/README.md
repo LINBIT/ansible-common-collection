@@ -5,7 +5,7 @@ Register nodes with the LINBIT customer portal and configure LINBIT package repo
 
 This role is the Ansible-driven equivalent of running `linbit-manage-node.py` manually.
 The script (fetched from `https://my.linbit.com/linbit-manage-node.py`) is the standard
-LINBIT tool for node registration — it authenticates against the customer portal using
+LINBIT tool for node registration; it authenticates against the customer portal using
 contract credentials and writes OS-appropriate package repository configuration.
 See [packages.linbit.com](https://packages.linbit.com/) for details.
 
