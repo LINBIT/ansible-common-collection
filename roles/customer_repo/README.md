@@ -45,7 +45,7 @@ Example Playbook
 
 ```yaml
 - name: Register LINBIT nodes
-  hosts: linstor_cluster
+  hosts: all
   become: true
   tasks:
     - ansible.builtin.import_role:
