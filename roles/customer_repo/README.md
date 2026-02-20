@@ -4,16 +4,13 @@ customer_repo
 Register nodes with the LINBIT customer portal and configure LINBIT package repositories.
 
 This role is the Ansible-driven equivalent of running `linbit-manage-node.py` manually.
-The script (fetched from `https://my.linbit.com/linbit-manage-node.py`) is the standard
-LINBIT tool for node registration; it authenticates against the customer portal using
-contract credentials and writes OS-appropriate package repository configuration.
+The script (fetched from `https://my.linbit.com/linbit-manage-node.py`) is the standard LINBIT tool for node registration; it authenticates against the customer portal using contract credentials and writes OS-appropriate package repository configuration.
 See [packages.linbit.com](https://packages.linbit.com/) for details.
 
 Requirements
 ------------
 
-LINBIT customer portal credentials, typically stored in `lbcreds.yaml` and symlinked
-into each stack's `group_vars/all/`:
+LINBIT customer portal credentials, typically stored in `lbcreds.yaml` and symlinked into each stack's `group_vars/all/`:
 
 | Variable | Description |
 |---|---|
@@ -22,8 +19,7 @@ into each stack's `group_vars/all/`:
 | `linbit_con_id` | Contract ID |
 | `linbit_clu_id` | Cluster ID |
 
-The role asserts that all four credential variables are defined and non-empty before
-attempting registration.
+The role asserts that all four credential variables are defined and non-empty before attempting registration.
 
 Role Variables
 --------------
