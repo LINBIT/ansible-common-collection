@@ -1,6 +1,18 @@
 # SPDX-License-Identifier: MIT
 ---
 # tasks file for customer_repo
+- name: Assert required LINBIT credential variables are defined
+  ansible.builtin.assert:
+    that:
+      - linbit_user is defined and linbit_user | length > 0
+      - linbit_pass is defined and linbit_pass | length > 0
+      - linbit_con_id is defined and linbit_con_id | length > 0
+      - linbit_clu_id is defined and linbit_clu_id | length > 0
+    fail_msg: >-
+      Required LINBIT credential variables are not set.
+      Define linbit_user, linbit_pass, linbit_con_id, and linbit_clu_id
+      in lbcreds.yaml (symlinked into group_vars/all/) or pass them as extra vars.
+
 - name: Load OS-specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
@@ -28,25 +40,25 @@
     # Enables all available LINBIT repos available to distro
     - name: Register nodes using linbit-manage-node.py - all repos enabled
       ansible.builtin.shell: |
-        bash -c "LB_USERNAME={{ lb_user }} LB_PASSWORD={{ lb_pass }} \
-          LB_CONTRACT_ID={{ lb_con_id }} LB_CLUSTER_ID={{ lb_clu_id }} \
+        bash -c "LB_USERNAME={{ linbit_user }} LB_PASSWORD={{ linbit_pass }} \
+          LB_CONTRACT_ID={{ linbit_con_id }} LB_CLUSTER_ID={{ linbit_clu_id }} \
           {{ ansible_python.executable }} /tmp/linbit-manage-node.py"
       changed_when: true
       retries: 3
       when:
-        - lb_repos is not defined
+        - linbit_repos is not defined
 
     # Enables all available LINBIT repos available to distro
     - name: Register nodes using linbit-manage-node.py - selective repos enabled
       ansible.builtin.shell: |
-        bash -c "LB_USERNAME={{ lb_user }} LB_PASSWORD={{ lb_pass }} \
-          LB_CONTRACT_ID={{ lb_con_id }} LB_CLUSTER_ID={{ lb_clu_id }} \
-          LB_REPOS={{ lb_repos }} {{ ansible_python.executable }} /tmp/linbit-manage-node.py"
+        bash -c "LB_USERNAME={{ linbit_user }} LB_PASSWORD={{ linbit_pass }} \
+          LB_CONTRACT_ID={{ linbit_con_id }} LB_CLUSTER_ID={{ linbit_clu_id }} \
+          LB_REPOS={{ linbit_repos }} {{ ansible_python.executable }} /tmp/linbit-manage-node.py"
       changed_when: true
       retries: 3
       when:
-        - lb_repos is defined
-        - lb_repos | length > 0
+        - linbit_repos is defined
+        - linbit_repos | length > 0
   rescue:
     - name: Remove registered node script on failure to register nodes
       ansible.builtin.file:
