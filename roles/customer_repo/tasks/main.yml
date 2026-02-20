@@ -35,7 +35,7 @@
   when:
     customer_repo_force_register | bool or
     customer_repo_script_downloaded.changed
-  notify: "{{ customer_repo_gpg_handler }}"
+  notify: refresh_gpg_keys
   block:
     # Enables all available LINBIT repos available to distro
     - name: Register nodes using linbit-manage-node.py - all repos enabled
@@ -89,5 +89,5 @@
     - staging | bool
 
 # Force GPG key and package manager cache refreshes
-- name: Flush handlers for registered_node
+- name: Flush handlers for customer_repo
   ansible.builtin.meta: flush_handlers

@@ -3,3 +3,4 @@
 - name: Refresh apt cache
   ansible.builtin.apt:
     update_cache: true
+  listen: refresh_apt_cache

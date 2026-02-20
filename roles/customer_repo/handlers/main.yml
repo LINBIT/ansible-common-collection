@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 ---
-# handlers file for registered_node
+# handlers file for customer_repo
 
 # Auto-import LINBIT GPG keys for RHEL family
 # kind of hacky, but works - Possible with ansible.builtin.dnf?
@@ -8,6 +8,7 @@
   ansible.builtin.command: dnf search bash --assumeyes
   changed_when: true
   failed_when: false
+  listen: refresh_gpg_keys
   when:
     - ansible_os_family | lower == 'redhat'
     - ansible_distribution_major_version | int >= 8
@@ -19,10 +20,11 @@
     # Needed if LINBIT gpg key has not been accepted
     refresh: true
     extra_args_precommand: '--gpg-auto-import-keys --no-gpg-checks'
+  listen: refresh_gpg_keys
   when: ansible_os_family | lower == 'suse'
 
-# Auto-import LINBIT GPG keys for SUSE
 - name: Refresh GPG keys (Debian)
   ansible.builtin.apt:
     update_cache: true
+  listen: refresh_gpg_keys
   when: ansible_os_family | lower == 'debian'
