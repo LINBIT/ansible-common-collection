@@ -32,7 +32,7 @@ Role Variables
 | Variable | Default | Description |
 |---|---|---|
 | `customer_repo_force_register` | `false` | Force re-registration even if the node is already registered |
-| `customer_repo_el_minor` | `false` | Pin EL repo URLs to the specific minor version (e.g. `9.3`) rather than the major stream |
+| `customer_repo_el_minor` | `false` | Pin Enterprise Linux repo URLs to the specific minor version (e.g. `9.3`) rather than the major stream |
 | `customer_repo_includes` | `[]` | List of glob patterns; only repos matching at least one pattern are enabled. Empty list enables all repos |
 | `customer_repo_excludes` | `[]` | List of glob patterns; repos matching any pattern are disabled. Applied after included patterns |
 | `customer_repo_staging` | `false` | Enable staging package URLs for repos matching `customer_repo_staging_repos` |
