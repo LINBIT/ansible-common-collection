@@ -1,14 +1,22 @@
 # SPDX-License-Identifier: MIT
 ---
-- name: Install software-properties-common
-  ansible.builtin.apt:
-    name: software-properties-common
-    state: present
+- name: Fetch PPA signing key fingerprint from Launchpad API
+  ansible.builtin.uri:
+    url: "{{ public_repo_ppa_api_url }}"
+    return_content: true
+    method: GET
+    headers:
+      Accept: "application/json"
+  register: _launchpad_response
 
 - name: Add LINBIT drbd9-stack PPA
-  ansible.builtin.apt_repository:
-    repo: "{{ public_repo_ppa }}"
-    state: present
+  ansible.builtin.deb822_repository:
+    name: linbit-drbd9-stack
+    types: [deb]
+    uris: "{{ public_repo_ppa_url }}"
+    suites: "{{ ansible_distribution_release }}"
+    components: [main]
+    signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x{{ _launchpad_response.json.signing_key_fingerprint }}"
   notify: refresh_apt_cache
 
 - name: Flush handlers

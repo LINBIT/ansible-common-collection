@@ -7,16 +7,13 @@
     allow_unauthenticated: true
 
 - name: Add LINBIT drbd-9 public Proxmox repo
-  ansible.builtin.blockinfile:
-    path: /etc/apt/sources.list.d/linbit.list
-    block: |
-      deb [signed-by={{ public_repo_gpg_path }}] {{ public_repo_proxmox_repo }} proxmox-{{ pve_version }} drbd-9
-    owner: root
-    group: root
-    mode: '644'
-    create: true
-  vars:
-    pve_version: "{{ ansible_distribution_major_version | int - 4 }}"
+  ansible.builtin.deb822_repository:
+    name: linbit
+    types: [deb]
+    uris: "{{ public_repo_proxmox_repo }}"
+    suites: "proxmox-{{ ansible_distribution_major_version | int - 4 }}"
+    components: [drbd-9]
+    signed_by: "{{ public_repo_gpg_path }}"
   notify: refresh_apt_cache
 
 - name: Flush handlers
