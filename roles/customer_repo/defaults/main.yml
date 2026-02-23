@@ -3,4 +3,15 @@
 # defaults file for customer_repo
 customer_repo_force_register: false
 
-customer_repo_use_rhel_minor_version: false
+customer_repo_el_minor: false
+
+# Glob patterns to filter repo names returned by the API.
+# included: only repos matching at least one pattern are configured (empty = all).
+# excluded: repos matching any pattern are excluded (applied after included).
+customer_repo_includes: []
+customer_repo_excludes: []
+
+# Enable staging package URLs for repos matching customer_repo_staging_repos.
+customer_repo_staging: false
+customer_repo_staging_repos:
+  - 'drbd-9*'

@@ -1,0 +1,25 @@
+# Managed by Ansible - linbit.common.customer_repo
+{% set repos = _linbit_registration.repos %}
+{% set all_keys = repos | list | sort %}
+{% set included_re = customer_repo_includes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
+{% set excluded_re = customer_repo_excludes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
+{% set staging_re = (customer_repo_staging_repos | map('replace', '*', '.*') | map('replace', '?', '.') | join('|')) if customer_repo_staging | bool else '' %}
+{% for name in all_keys %}
+{% set enabled = (not included_re or name | regex_search(included_re)) and (not excluded_re or not name | regex_search(excluded_re)) %}
+{% set config = repos[name]['config'] %}
+{% if customer_repo_el_minor | bool and ansible_os_family == 'RedHat' %}
+{% set config = config | replace('/rhel' ~ ansible_distribution_major_version ~ '/', '/rhel' ~ ansible_distribution_version ~ '/') %}
+{% endif %}
+{% if staging_re and name | regex_search(staging_re) %}
+{% set config = config | replace('/' ~ _linbit_registration.nodehash ~ '/', '/' ~ _linbit_registration.nodehash ~ '/staging/') %}
+{% endif %}
+[{{ name }}]
+name=LINBIT Packages for {{ name }} - $basearch
+{{ config }}
+enabled={{ '1' if enabled else '0' }}
+gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-linbit
+gpgcheck=1
+repo_gpgcheck=1
+priority=90
+
+{% endfor %}
