@@ -49,11 +49,11 @@
     _linbit_distribution: >-
       {%- if ansible_distribution | lower == 'proxmox' or 'pve' in ansible_kernel -%}
         proxmox-{{ ansible_distribution_major_version }}
-      {%- elif ansible_os_family == 'Debian' -%}
+      {%- elif ansible_os_family | lower == 'debian' -%}
         {{ ansible_distribution | lower }}-{{ ansible_distribution_release }}
-      {%- elif ansible_os_family == 'RedHat' -%}
+      {%- elif ansible_os_family | lower == 'redhat' -%}
         rhel{{ ansible_distribution_version }}
-      {%- elif ansible_os_family == 'Suse' -%}
+      {%- elif ansible_os_family | lower == 'suse' -%}
         sles{{ ansible_distribution_major_version }}-sp{{ ansible_distribution_version.split('.')[1] | default('0') }}
       {%- endif -%}
 
@@ -78,7 +78,7 @@
 
 - name: Write LINBIT repo configuration
   ansible.builtin.template:
-    src: "{{ 'linbit-apt.list.j2' if ansible_os_family == 'Debian' else 'linbit-rpm.repo.j2' }}"
+    src: "{{ 'linbit-apt.list.j2' if ansible_os_family | lower == 'debian' else 'linbit-rpm.repo.j2' }}"
     dest: "{{ customer_repo_file }}"
     owner: root
     group: root
