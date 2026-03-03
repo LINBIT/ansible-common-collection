@@ -1,12 +1,5 @@
 # SPDX-License-Identifier: MIT
 ---
-- name: Check if LINBIT GPG keyring is installed
-  ansible.builtin.command: dpkg-query -W linbit-keyring
-  register: _linbit_keyring_check
-  changed_when: false
-  failed_when: false
-
 - name: Install LINBIT GPG keyring
   ansible.builtin.apt:
     deb: https://packages.linbit.com/public/linbit-keyring.deb
-  when: _linbit_keyring_check.rc != 0
