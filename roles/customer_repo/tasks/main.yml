@@ -51,8 +51,10 @@
         proxmox-{{ ansible_distribution_major_version | int - 4 }}
       {%- elif ansible_os_family | lower == 'debian' -%}
         {{ ansible_distribution | lower }}-{{ ansible_distribution_release }}
+      {%- elif ansible_distribution | lower == 'oraclelinux' -%}
+        ol{{ ansible_distribution_major_version }}
       {%- elif ansible_os_family | lower == 'redhat' -%}
-        rhel{{ ansible_distribution_version }}
+        rhel{{ ansible_distribution_major_version }}
       {%- elif ansible_os_family | lower == 'suse' -%}
         sles{{ ansible_distribution_major_version }}-sp{{ ansible_distribution_version.split('.')[1] | default('0') }}
       {%- endif -%}
