@@ -6,7 +6,13 @@
     state: latest
     disable_gpg_check: true
 
+- name: Check if LINBIT GPG key is already imported
+  ansible.builtin.shell:
+    cmd: rpm -q gpg-pubkey --qf '%{SUMMARY}\n' | grep -qi linbit
+  register: _linbit_key_check
+  changed_when: false
+  failed_when: false
+
 - name: Import LINBIT GPG keys into RPM database
   ansible.builtin.command: rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-linbit
-  register: _rpm_import
-  changed_when: _rpm_import.rc == 0
+  when: _linbit_key_check.rc != 0
