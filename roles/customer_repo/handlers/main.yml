@@ -10,8 +10,8 @@
   failed_when: false
   listen: refresh_gpg_keys
   when:
-    - ansible_os_family | lower == 'redhat'
-    - ansible_distribution_major_version | int >= 8
+    - ansible_facts['os_family'] | lower == 'redhat'
+    - ansible_facts['distribution_major_version'] | int >= 8
 
 # Auto-import LINBIT GPG keys for SUSE
 - name: Refresh GPG keys (Suse)
@@ -21,10 +21,10 @@
     refresh: true
     extra_args_precommand: '--gpg-auto-import-keys --no-gpg-checks'
   listen: refresh_gpg_keys
-  when: ansible_os_family | lower == 'suse'
+  when: ansible_facts['os_family'] | lower == 'suse'
 
 - name: Refresh GPG keys (Debian)
   ansible.builtin.apt:
     update_cache: true
   listen: refresh_gpg_keys
-  when: ansible_os_family | lower == 'debian'
+  when: ansible_facts['os_family'] | lower == 'debian'

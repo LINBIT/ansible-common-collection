@@ -3,14 +3,14 @@
 - name: Assert supported OS (Debian or Ubuntu)
   ansible.builtin.assert:
     that:
-      - ansible_distribution | lower in ['debian', 'ubuntu']
+      - ansible_facts['distribution'] | lower in ['debian', 'ubuntu']
     msg: >
       public_repo supports Debian (Proxmox VE) and Ubuntu only.
 
 - name: Configure LINBIT public repo (Proxmox VE)
   ansible.builtin.include_tasks: proxmox.yml
-  when: ansible_distribution | lower == 'debian'
+  when: ansible_facts['distribution'] | lower == 'debian'
 
 - name: Configure LINBIT PPA (Ubuntu)
   ansible.builtin.include_tasks: ubuntu.yml
-  when: ansible_distribution | lower == 'ubuntu'
+  when: ansible_facts['distribution'] | lower == 'ubuntu'

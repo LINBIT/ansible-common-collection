@@ -32,14 +32,14 @@
 - name: Gather facts
   ansible.builtin.setup:
     gather_subset: min
-  when: ansible_os_family is not defined
+  when: ansible_facts['os_family'] is not defined
 
 - name: Load OS-specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:
     - files:
-        - "{{ ansible_distribution | lower }}.yml"
-        - "{{ ansible_os_family | lower }}.yml"
+        - "{{ ansible_facts['distribution'] | lower }}.yml"
+        - "{{ ansible_facts['os_family'] | lower }}.yml"
       paths:
         - "{{ role_path }}/vars"
       skip: true
@@ -47,16 +47,16 @@
 - name: Build LINBIT distribution string
   ansible.builtin.set_fact:
     _linbit_distribution: >-
-      {%- if ansible_distribution | lower == 'proxmox' or 'pve' in ansible_kernel -%}
-        proxmox-{{ ansible_distribution_major_version | int - 4 }}
-      {%- elif ansible_os_family | lower == 'debian' -%}
-        {{ ansible_distribution | lower }}-{{ ansible_distribution_release }}
-      {%- elif ansible_distribution | lower == 'oraclelinux' -%}
-        ol{{ ansible_distribution_major_version }}
-      {%- elif ansible_os_family | lower == 'redhat' -%}
-        rhel{{ ansible_distribution_major_version }}
-      {%- elif ansible_os_family | lower == 'suse' -%}
-        sles{{ ansible_distribution_major_version }}-sp{{ ansible_distribution_version.split('.')[1] | default('0') }}
+      {%- if ansible_facts['distribution'] | lower == 'proxmox' or 'pve' in ansible_facts['kernel'] -%}
+        proxmox-{{ ansible_facts['distribution_major_version'] | int - 4 }}
+      {%- elif ansible_facts['os_family'] | lower == 'debian' -%}
+        {{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] }}
+      {%- elif ansible_facts['distribution'] | lower == 'oraclelinux' -%}
+        ol{{ ansible_facts['distribution_major_version'] }}
+      {%- elif ansible_facts['os_family'] | lower == 'redhat' -%}
+        rhel{{ ansible_facts['distribution_major_version'] }}
+      {%- elif ansible_facts['os_family'] | lower == 'suse' -%}
+        sles{{ ansible_facts['distribution_major_version'] }}-sp{{ ansible_facts['distribution_version'].split('.')[1] | default('0') }}
       {%- endif -%}
 
 - name: Register node with LINBIT portal
@@ -73,14 +73,14 @@
   ansible.builtin.include_tasks: "{{ item }}"
   with_first_found:
     - files:
-        - "keyring-{{ ansible_os_family | lower }}.yml"
+        - "keyring-{{ ansible_facts['os_family'] | lower }}.yml"
       paths:
         - "{{ role_path }}/tasks"
       skip: true
 
 - name: Write LINBIT repo configuration
   ansible.builtin.template:
-    src: "{{ 'linbit-apt.list.j2' if ansible_os_family | lower == 'debian' else 'linbit-rpm.repo.j2' }}"
+    src: "{{ 'linbit-apt.list.j2' if ansible_facts['os_family'] | lower == 'debian' else 'linbit-rpm.repo.j2' }}"
     dest: "{{ customer_repo_file }}"
     owner: root
     group: root

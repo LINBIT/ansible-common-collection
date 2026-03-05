@@ -14,7 +14,7 @@
     name: linbit-drbd9-stack
     types: [deb]
     uris: "{{ public_repo_ppa_url }}"
-    suites: "{{ ansible_distribution_release }}"
+    suites: "{{ ansible_facts['distribution_release'] }}"
     components: [main]
     signed_by: "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x{{ _launchpad_response.json.signing_key_fingerprint }}"
   notify: refresh_apt_cache
