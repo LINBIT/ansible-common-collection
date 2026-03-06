@@ -23,7 +23,6 @@ options:
     description: LINBIT portal password.
     type: str
     required: true
-    no_log: true
   contract_id:
     description:
       - LINBIT contract ID.
@@ -37,14 +36,6 @@ options:
         falls back to the most recent cluster on the contract, or creates a new cluster.
     type: str
     required: false
-  distribution:
-    description:
-      - LINBIT distribution string.
-      - For Debian/Ubuntu, use the codename (e.g. C(noble), C(bookworm)).
-      - For RHEL, use C(rhel) followed by the major version (e.g. C(rhel9)).
-      - For SLES, use C(sles) followed by version and service pack (e.g. C(sles15-sp6)).
-    type: str
-    required: true
   force:
     description: Force re-registration even if the node is already registered.
     type: bool
@@ -53,8 +44,26 @@ options:
     description: LINBIT API base URL.
     type: str
     default: https://api.linbit.com
+notes:
+  - Fully idempotent. Saves registration data to C(/var/lib/drbd-support/registration.json)
+    and skips the API call on subsequent runs when MAC addresses match.
+  - Supports C(check_mode). In check mode, the module authenticates and resolves
+    contract and cluster IDs but does not register the node.
+  - MAC addresses are gathered from C(/sys/class/net/) and filtered to permanent
+    Ethernet interfaces only (excluding virtual, bond, and loopback interfaces).
+  - When C(contract_id) is omitted, the module selects the newest active contract
+    on the account (highest numeric ID).
+  - When C(cluster_id) is omitted, the module checks for an existing registration,
+    falls back to the most recent cluster on the contract, or creates a new cluster.
+  - Consider storing C(username) and C(password) in an Ansible Vault encrypted file
+    rather than in plain-text variables.
+    See L(Ansible Vault,https://docs.ansible.com/ansible/latest/vault_guide/index.html).
+seealso:
+  - name: LINBIT Customer Portal
+    link: https://my.linbit.com/
+    description: Manage contracts, clusters, and node registrations.
 author:
-  - LINBIT (@LINBIT)
+  - Ryan Ronnander (@rronnander)
 '''
 
 EXAMPLES = r'''
@@ -62,7 +71,6 @@ EXAMPLES = r'''
   linbit.common.linbit_register_node:
     username: "{{ linbit_username }}"
     password: "{{ linbit_password }}"
-    distribution: noble
   register: registration
 
 - name: Register node with explicit IDs
@@ -71,13 +79,11 @@ EXAMPLES = r'''
     password: "{{ linbit_password }}"
     contract_id: "{{ linbit_contract_id }}"
     cluster_id: "{{ linbit_cluster_id }}"
-    distribution: rhel9
 
 - name: Force re-registration
   linbit.common.linbit_register_node:
     username: "{{ linbit_username }}"
     password: "{{ linbit_password }}"
-    distribution: rhel9
     force: true
 '''
 
@@ -110,6 +116,10 @@ mac_addresses:
 repos:
   description: Repository configuration returned by the API.
   type: dict
+  returned: success
+repo_config:
+  description: Raw repository configuration string returned by the API.
+  type: str
   returned: success
 '''
 
