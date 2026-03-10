@@ -66,11 +66,11 @@ Exclude LINBIT Pacemaker repositories:
   become: true
   tasks:
     - name: Register and configure LINBIT repos
+      ansible.builtin.import_role:
+        name: linbit.common.customer_repo
       vars:
         customer_repo_excludes:
           - 'pacemaker-*'
-      ansible.builtin.import_role:
-        name: linbit.common.customer_repo
 ```
 
 Store credentials with Ansible Vault:
