@@ -51,6 +51,7 @@ Enable all available LINBIT repositories:
 ```yaml
 - name: Register LINBIT nodes
   hosts: all
+  any_errors_fatal: true
   become: true
   tasks:
     - name: Register and configure LINBIT repos
@@ -63,6 +64,7 @@ Exclude LINBIT Pacemaker repositories:
 ```yaml
 - name: Register LINBIT nodes
   hosts: all
+  any_errors_fatal: true
   become: true
   tasks:
     - name: Register and configure LINBIT repos

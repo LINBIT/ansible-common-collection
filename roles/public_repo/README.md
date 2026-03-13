@@ -37,6 +37,7 @@ Example Playbook
 ```yaml
 - name: Configure LINBIT public repo
   hosts: all
+  any_errors_fatal: true
   become: true
   tasks:
     - ansible.builtin.import_role:
