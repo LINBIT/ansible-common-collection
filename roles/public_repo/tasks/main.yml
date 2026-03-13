@@ -1,16 +1,37 @@
 # SPDX-License-Identifier: MIT
 ---
-- name: Assert supported OS (Debian or Ubuntu)
+- name: Assert supported OS (Proxmox VE or Ubuntu)
   ansible.builtin.assert:
     that:
-      - ansible_facts['distribution'] | lower in ['debian', 'ubuntu']
+      - >-
+        (ansible_facts['distribution'] | lower == 'debian' and
+         'pve' in ansible_facts['kernel']) or
+        ansible_facts['distribution'] | lower == 'ubuntu'
     msg: >
-      public_repo supports Debian (Proxmox VE) and Ubuntu only.
+      public_repo supports Proxmox VE and Ubuntu only.
+      Plain Debian is not supported.
+
+- name: Check if LINBIT public repo is configured
+  ansible.builtin.stat:
+    path: "/etc/apt/sources.list.d/{{ _public_repo_sources_file }}.sources"
+  vars:
+    _public_repo_sources_file: >-
+      {%- if ansible_facts['distribution'] | lower == 'debian' -%}
+        linbit
+      {%- else -%}
+        linbit-drbd9-stack
+      {%- endif -%}
+  register: _public_repo_check
 
 - name: Configure LINBIT public repo (Proxmox VE)
   ansible.builtin.include_tasks: proxmox.yml
-  when: ansible_facts['distribution'] | lower == 'debian'
+  when:
+    - ansible_facts['distribution'] | lower == 'debian'
+    - "'pve' in ansible_facts['kernel']"
+    - not _public_repo_check.stat.exists
 
 - name: Configure LINBIT PPA (Ubuntu)
   ansible.builtin.include_tasks: ubuntu.yml
-  when: ansible_facts['distribution'] | lower == 'ubuntu'
+  when:
+    - ansible_facts['distribution'] | lower == 'ubuntu'
+    - not _public_repo_check.stat.exists
