@@ -1,34 +1,5 @@
 # SPDX-License-Identifier: MIT
 ---
-# tasks file for customer_repo
-- name: Prompt for LINBIT portal username
-  ansible.builtin.pause:
-    prompt: "Enter LINBIT portal username (linbit_username)"
-  register: _linbit_username_prompt
-  run_once: true
-  when: linbit_username is not defined or linbit_username | length == 0
-
-- name: Set linbit_username from prompt
-  ansible.builtin.set_fact:
-    linbit_username: "{{ _linbit_username_prompt.user_input }}"
-  run_once: true
-  when: _linbit_username_prompt is not skipped
-
-- name: Prompt for LINBIT portal password
-  ansible.builtin.pause:
-    prompt: "Enter LINBIT portal password (linbit_password)"
-  register: _linbit_password_prompt
-  run_once: true
-  no_log: true
-  when: linbit_password is not defined or linbit_password | length == 0
-
-- name: Set linbit_password from prompt
-  ansible.builtin.set_fact:
-    linbit_password: "{{ _linbit_password_prompt.user_input }}"
-  run_once: true
-  no_log: true
-  when: _linbit_password_prompt is not skipped
-
 - name: Gather facts
   ansible.builtin.setup:
     gather_subset: min
@@ -44,49 +15,11 @@
         - "{{ role_path }}/vars"
       skip: true
 
-- name: Build LINBIT distribution string
-  ansible.builtin.set_fact:
-    _linbit_distribution: >-
-      {%- if ansible_facts['distribution'] | lower == 'proxmox' or 'pve' in ansible_facts['kernel'] -%}
-        proxmox-{{ ansible_facts['distribution_major_version'] | int - 4 }}
-      {%- elif ansible_facts['os_family'] | lower == 'debian' -%}
-        {{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] }}
-      {%- elif ansible_facts['distribution'] | lower == 'oraclelinux' -%}
-        ol{{ ansible_facts['distribution_major_version'] }}
-      {%- elif ansible_facts['os_family'] | lower == 'redhat' -%}
-        rhel{{ ansible_facts['distribution_major_version'] }}
-      {%- elif ansible_facts['os_family'] | lower == 'suse' -%}
-        sles{{ ansible_facts['distribution_major_version'] }}-sp{{ ansible_facts['distribution_version'].split('.')[1] | default('0') }}
-      {%- endif -%}
+- name: Check if LINBIT repo is configured
+  ansible.builtin.stat:
+    path: "{{ customer_repo_file }}"
+  register: _customer_repo_check
 
-- name: Register node with LINBIT portal
-  linbit.common.linbit_register_node:
-    username: "{{ linbit_username }}"
-    password: "{{ linbit_password }}"
-    contract_id: "{{ linbit_contract_id | default(omit) }}"
-    cluster_id: "{{ linbit_cluster_id | default(omit) }}"
-    distribution: "{{ _linbit_distribution }}"
-    force: "{{ customer_repo_force_register | bool }}"
-  register: _linbit_registration
-
-- name: Install LINBIT GPG keyring
-  ansible.builtin.include_tasks: "{{ item }}"
-  with_first_found:
-    - files:
-        - "keyring-{{ ansible_facts['os_family'] | lower }}.yml"
-      paths:
-        - "{{ role_path }}/tasks"
-      skip: true
-
-- name: Write LINBIT repo configuration
-  ansible.builtin.template:
-    src: "{{ 'linbit-apt.list.j2' if ansible_facts['os_family'] | lower == 'debian' else 'linbit-rpm.repo.j2' }}"
-    dest: "{{ customer_repo_file }}"
-    owner: root
-    group: root
-    mode: '0644'
-  notify: refresh_gpg_keys
-
-# Force GPG key and package manager cache refreshes
-- name: Flush handlers for customer_repo
-  ansible.builtin.meta: flush_handlers
+- name: Configure LINBIT customer repository
+  ansible.builtin.include_tasks: configure-repo.yml
+  when: not _customer_repo_check.stat.exists or customer_repo_force_register | bool
