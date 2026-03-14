@@ -53,10 +53,29 @@ Enable all available LINBIT repositories:
   hosts: all
   any_errors_fatal: true
   become: true
+  vars:
+    linbit_username: 'myuser@example.com'
+    linbit_password: 'secretpassword'
   tasks:
     - name: Register and configure LINBIT repos
       ansible.builtin.import_role:
         name: linbit.common.customer_repo
+```
+
+Store credentials with Ansible Vault:
+
+```sh
+ansible-vault create group_vars/all/vault.yaml
+```
+
+```yaml
+# group_vars/all/vault.yaml (encrypted)
+linbit_username: 'myuser@example.com'
+linbit_password: 'secretpassword'
+```
+
+```sh
+ansible-playbook playbook.yaml --ask-vault-pass
 ```
 
 Exclude LINBIT Pacemaker repositories:
@@ -73,22 +92,6 @@ Exclude LINBIT Pacemaker repositories:
       vars:
         customer_repo_excludes:
           - 'pacemaker-*'
-```
-
-Store credentials with Ansible Vault:
-
-```sh
-ansible-vault create group_vars/all/vault.yaml
-```
-
-```yaml
-# group_vars/all/vault.yaml (encrypted)
-linbit_username: myuser@example.com
-linbit_password: secretpassword
-```
-
-```sh
-ansible-playbook playbook.yaml --ask-vault-pass
 ```
 
 License
