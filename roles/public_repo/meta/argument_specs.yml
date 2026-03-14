@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+---
+argument_specs:
+  main:
+    short_description: Configure the LINBIT public package repository
+    description:
+      - Configure the LINBIT public package repository for Ubuntu and Proxmox VE.
+      - On Ubuntu, adds the LINBIT drbd9-stack Launchpad PPA.
+      - On Proxmox VE, installs C(linbit-keyring) and adds the LINBIT public APT repo.
+      - Plain Debian (without Proxmox VE) is not supported.
+    options:
+      public_repo_ppa_url:
+        type: str
+        default: "https://ppa.launchpadcontent.net/linbit/linbit-drbd9-stack/ubuntu"
+        description:
+          - PPA repository URL for Ubuntu.
+      public_repo_ppa_api_url:
+        type: str
+        default: "https://api.launchpad.net/devel/~linbit/+archive/ubuntu/linbit-drbd9-stack"
+        description:
+          - Launchpad API URL for PPA signing key lookup.
+      public_repo_keyring_package_url:
+        type: str
+        default: "https://packages.linbit.com/public/linbit-keyring.deb"
+        description:
+          - LINBIT keyring package URL for Proxmox VE.
+      public_repo_proxmox_repo:
+        type: str
+        default: "http://packages.linbit.com/public/"
+        description:
+          - LINBIT public APT repo URL for Proxmox VE.
+      public_repo_gpg_path:
+        type: str
+        default: "/etc/apt/trusted.gpg.d/linbit-keyring.gpg"
+        description:
+          - GPG key path for the LINBIT signing key.

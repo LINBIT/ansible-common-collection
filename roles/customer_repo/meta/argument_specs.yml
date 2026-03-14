@@ -1,0 +1,71 @@
+# SPDX-License-Identifier: MIT
+---
+argument_specs:
+  main:
+    short_description: Register nodes with the LINBIT customer portal
+    description:
+      - Register nodes with the LINBIT customer portal and configure LINBIT package repositories.
+      - Uses the C(linbit.common.linbit_register_node) module to authenticate against the LINBIT customer portal API.
+      - Registration data is cached in C(/var/lib/drbd-support/registration.json) for idempotency.
+    options:
+      linbit_username:
+        type: str
+        required: true
+        description:
+          - LINBIT portal username.
+          - Prompted interactively if undefined or empty.
+      linbit_password:
+        type: str
+        required: true
+        no_log: true
+        description:
+          - LINBIT portal password.
+          - Prompted interactively if undefined or empty.
+      linbit_contract_id:
+        type: str
+        description:
+          - Contract ID.
+          - Auto-discovered from the newest (highest ID) active contract on the account.
+      linbit_cluster_id:
+        type: str
+        description:
+          - Cluster ID.
+          - Auto-discovered from existing registration, most recent cluster, or a new cluster is created.
+      customer_repo_force_register:
+        type: bool
+        default: false
+        description:
+          - Force re-registration even if the node is already registered.
+      customer_repo_el_minor:
+        type: bool
+        default: false
+        description:
+          - Pin Enterprise Linux repo URLs to the specific minor version (for example C(9.3)) rather than the major stream.
+      customer_repo_includes:
+        type: list
+        elements: str
+        default: []
+        description:
+          - List of glob patterns to filter which repos are enabled.
+          - Only repos matching at least one pattern are configured.
+          - Empty list enables all repos.
+      customer_repo_excludes:
+        type: list
+        elements: str
+        default: []
+        description:
+          - List of glob patterns to exclude repos.
+          - Repos matching any pattern are disabled.
+          - Applied after C(customer_repo_includes).
+      customer_repo_staging:
+        type: bool
+        default: false
+        description:
+          - Enable staging package URLs for repos matching C(customer_repo_staging_repos).
+      customer_repo_staging_repos:
+        type: list
+        elements: str
+        default:
+          - "drbd-9*"
+        description:
+          - List of glob patterns for repos that use the staging URL when C(customer_repo_staging) is C(true).
