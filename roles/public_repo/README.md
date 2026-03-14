@@ -40,7 +40,8 @@ Example Playbook
   any_errors_fatal: true
   become: true
   tasks:
-    - ansible.builtin.import_role:
+    - name: Configure LINBIT public repo
+      ansible.builtin.import_role:
         name: linbit.common.public_repo
 ```
 
