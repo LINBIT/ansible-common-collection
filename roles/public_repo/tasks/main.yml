@@ -10,6 +10,7 @@
     msg: >
       public_repo supports Proxmox VE and Ubuntu only.
       Plain Debian is not supported.
+    quiet: true
 
 - name: Check if LINBIT public repo is configured
   ansible.builtin.stat:
