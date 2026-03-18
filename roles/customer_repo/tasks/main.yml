@@ -5,6 +5,11 @@
     gather_subset: min
   when: ansible_facts['os_family'] is not defined
 
+# Used to determine if Proxmox VE is installed
+- name: Gather installed package facts for OS detection
+  ansible.builtin.package_facts:
+  when: ansible_facts['packages'] is not defined
+
 - name: Load OS-specific variables
   ansible.builtin.include_vars: "{{ item }}"
   with_first_found:

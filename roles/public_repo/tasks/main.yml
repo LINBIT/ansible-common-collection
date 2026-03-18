@@ -1,11 +1,15 @@
 # SPDX-License-Identifier: MIT
 ---
+# Used to determine if Proxmox VE is installed
+- name: Gather installed package facts for OS detection
+  ansible.builtin.package_facts:
+  when: ansible_facts['packages'] is not defined
+
 - name: Assert supported OS (Proxmox VE or Ubuntu)
   ansible.builtin.assert:
     that:
       - >-
-        (ansible_facts['distribution'] | lower == 'debian' and
-         'pve' in ansible_facts['kernel']) or
+        _pve_check | bool or
         ansible_facts['distribution'] | lower == 'ubuntu'
     msg: >
       public_repo supports Proxmox VE and Ubuntu only.
@@ -27,8 +31,7 @@
 - name: Configure LINBIT public repo (Proxmox VE)
   ansible.builtin.include_tasks: proxmox.yml
   when:
-    - ansible_facts['distribution'] | lower == 'debian'
-    - "'pve' in ansible_facts['kernel']"
+    - _pve_check | bool
     - not _public_repo_check.stat.exists
 
 - name: Configure LINBIT PPA (Ubuntu)
