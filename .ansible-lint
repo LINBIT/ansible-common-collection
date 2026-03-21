@@ -1,6 +1,0 @@
----
-skip_list:
-  # linbit_username, linbit_password, linbit_contract_id, linbit_cluster_id are
-  # shared credential variables that intentionally use a linbit_ prefix rather
-  # than a role-specific prefix, as they are passed in from lbcreds.yaml.
-  - var-naming[no-role-prefix]

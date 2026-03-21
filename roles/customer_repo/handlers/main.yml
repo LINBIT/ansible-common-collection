@@ -4,7 +4,7 @@
 
 # Auto-import LINBIT GPG keys for RHEL family
 # kind of hacky, but works - Possible with ansible.builtin.dnf?
-- name: Refresh GPG keys (RedHat)
+- name: Refresh GPG keys (DNF)
   ansible.builtin.command: dnf search bash --assumeyes
   changed_when: true
   failed_when: false
@@ -14,7 +14,7 @@
     - ansible_facts['distribution_major_version'] | int >= 8
 
 # Auto-import LINBIT GPG keys for SUSE
-- name: Refresh GPG keys (Suse)
+- name: Refresh GPG keys (Zypper)
   community.general.zypper:
     name: ""
     # Needed if LINBIT gpg key has not been accepted
@@ -23,7 +23,7 @@
   listen: refresh_gpg_keys
   when: ansible_facts['os_family'] | lower == 'suse'
 
-- name: Refresh GPG keys (Debian)
+- name: Refresh GPG keys (APT)
   ansible.builtin.apt:
     update_cache: true
   listen: refresh_gpg_keys

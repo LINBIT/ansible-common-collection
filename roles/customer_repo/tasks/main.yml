@@ -1,30 +1,14 @@
 # SPDX-License-Identifier: MIT
 ---
-- name: Gather facts
-  ansible.builtin.setup:
-    gather_subset: min
-  when: ansible_facts['os_family'] is not defined
-
-# Used to determine if Proxmox VE is installed
-- name: Gather installed package facts for OS detection
-  ansible.builtin.package_facts:
-  when: ansible_facts['packages'] is not defined
-
-- name: Load OS-specific variables
-  ansible.builtin.include_vars: "{{ item }}"
-  with_first_found:
-    - files:
-        - "{{ ansible_facts['distribution'] | lower }}.yml"
-        - "{{ ansible_facts['os_family'] | lower }}.yml"
-      paths:
-        - "{{ role_path }}/vars"
-      skip: true
-
 - name: Check if LINBIT repo is configured
   ansible.builtin.stat:
-    path: "{{ customer_repo_file }}"
+    path: "{{ _customer_repo_file }}"
   register: _customer_repo_check
+  when: not customer_repo_force_register
 
 - name: Configure LINBIT customer repository
   ansible.builtin.include_tasks: configure-repo.yml
-  when: not _customer_repo_check.stat.exists or customer_repo_force_register | bool
+  when: >-
+    customer_repo_force_register | bool or
+    not _customer_repo_check.stat.exists or
+    _customer_repo_check.stat.size == 0

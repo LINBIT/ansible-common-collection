@@ -1,6 +1,6 @@
 # SPDX-License-Identifier: MIT
 ---
-- name: Install LINBIT GPG keyring
+- name: Install LINBIT GPG keyring (DNF)
   ansible.builtin.dnf:
     name: "https://packages.linbit.com/public/linbit-keyring/{{ _linbit_distribution }}/linbit-keyring.rpm"
     state: latest

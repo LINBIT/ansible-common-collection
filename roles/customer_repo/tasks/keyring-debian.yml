@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: MIT
 ---
-- name: Install LINBIT GPG keyring
+- name: Install LINBIT GPG keyring (APT)
   ansible.builtin.apt:
     deb: https://packages.linbit.com/public/linbit-keyring.deb

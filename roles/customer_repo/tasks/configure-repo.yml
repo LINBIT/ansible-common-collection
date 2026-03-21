@@ -1,5 +1,10 @@
 # SPDX-License-Identifier: MIT
 ---
+# Used to determine if Proxmox VE is installed
+- name: Gather installed package facts for OS detection
+  ansible.builtin.package_facts:
+  when: ansible_facts['packages'] is not defined
+
 - name: Prompt for LINBIT portal username
   ansible.builtin.pause:
     prompt: "Enter LINBIT portal username (linbit_username)"
@@ -65,7 +70,7 @@
 - name: Write LINBIT repo configuration
   ansible.builtin.template:
     src: "{{ 'linbit-apt.list.j2' if ansible_facts['os_family'] | lower == 'debian' else 'linbit-rpm.repo.j2' }}"
-    dest: "{{ customer_repo_file }}"
+    dest: "{{ _customer_repo_file }}"
     owner: root
     group: root
     mode: '0644'

@@ -1,5 +1,14 @@
 # SPDX-License-Identifier: MIT
 ---
-_pve_check: >-  # noqa: var-naming[no-role-prefix]
+_pve_check: >- # noqa: var-naming[no-role-prefix]
   {{ 'pve' in ansible_facts['kernel'] or
      'proxmox-ve' in (ansible_facts['packages'] | default({})) }}
+
+# Ubuntu PPA
+public_repo_ppa_url: 'https://ppa.launchpadcontent.net/linbit/linbit-drbd9-stack/ubuntu'
+public_repo_ppa_api_url: 'https://api.launchpad.net/devel/~linbit/+archive/ubuntu/linbit-drbd9-stack'
+
+# Proxmox VE
+public_repo_keyring_package_url: 'https://packages.linbit.com/public/linbit-keyring.deb'
+public_repo_proxmox_repo: 'http://packages.linbit.com/public/'
+public_repo_gpg_path: '/etc/apt/trusted.gpg.d/linbit-keyring.gpg'
