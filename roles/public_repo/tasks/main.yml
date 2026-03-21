@@ -4,7 +4,7 @@
   ansible.builtin.assert:
     that:
       - >-
-        _pve_check | bool or
+        ansible_facts | linbit.common.is_pve or
         ansible_facts['distribution'] | lower == 'ubuntu'
     msg: >
       public_repo supports Proxmox VE and Ubuntu only.
@@ -26,7 +26,7 @@
 - name: Configure LINBIT public repo (Proxmox VE)
   ansible.builtin.include_tasks: proxmox.yml
   when:
-    - _pve_check | bool
+    - ansible_facts | linbit.common.is_pve
     - not _public_repo_check.stat.exists
 
 - name: Configure LINBIT PPA (Ubuntu)

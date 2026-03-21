@@ -1,9 +1,5 @@
 # SPDX-License-Identifier: MIT
 ---
-_pve_check: >- # noqa: var-naming[no-role-prefix]
-  {{ 'pve' in ansible_facts['kernel'] or
-     'proxmox-ve' in (ansible_facts['packages'] | default({})) }}
-
 _customer_repo_file: >- # noqa: var-naming[no-role-prefix]
   {{
     '/etc/yum.repos.d/linbit.repo'

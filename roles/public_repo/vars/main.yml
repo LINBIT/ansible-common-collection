@@ -1,9 +1,5 @@
 # SPDX-License-Identifier: MIT
 ---
-_pve_check: >- # noqa: var-naming[no-role-prefix]
-  {{ 'pve' in ansible_facts['kernel'] or
-     'proxmox-ve' in (ansible_facts['packages'] | default({})) }}
-
 # Ubuntu PPA
 public_repo_ppa_url: 'https://ppa.launchpadcontent.net/linbit/linbit-drbd9-stack/ubuntu'
 public_repo_ppa_api_url: 'https://api.launchpad.net/devel/~linbit/+archive/ubuntu/linbit-drbd9-stack'

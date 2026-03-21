@@ -31,7 +31,7 @@
 - name: Build LINBIT distribution string
   ansible.builtin.set_fact:
     _linbit_distribution: >-
-      {%- if _pve_check | bool -%}
+      {%- if ansible_facts | linbit.common.is_pve -%}
         proxmox-{{ ansible_facts['distribution_major_version'] | int - 4 }}
       {%- elif ansible_facts['os_family'] | lower == 'debian' -%}
         {{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] }}
