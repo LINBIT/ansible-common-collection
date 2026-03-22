@@ -2,7 +2,7 @@
 {% set repos = _linbit_registration.repos %}
 {% set all_keys = repos | list | sort %}
 {% set included_re = customer_repo_includes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
-{% set excluded_re = customer_repo_excludes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
+{% set excluded_re = _customer_repo_excludes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
 {% set staging_re = (customer_repo_staging_repos | map('replace', '*', '.*') | map('replace', '?', '.') | join('|')) if customer_repo_staging | bool else '' %}
 {% for name in all_keys %}
 {% set enabled = (not included_re or name | regex_search(included_re)) and (not excluded_re or not name | regex_search(excluded_re)) %}

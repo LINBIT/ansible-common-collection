@@ -34,7 +34,8 @@ Role Variables
 | `customer_repo_force_register` | `false` | Force re-registration even if the node is already registered |
 | `customer_repo_el_minor` | `false` | Pin Enterprise Linux repo URLs to the specific minor version (e.g. `9.3`) rather than the major stream |
 | `customer_repo_includes` | `[]` | List of glob patterns; only repos matching at least one pattern are enabled. Empty list enables all repos |
-| `customer_repo_excludes` | `[]` | List of glob patterns; repos matching any pattern are disabled. Applied after included patterns |
+| `customer_repo_default_excludes` | `['drbd-8*', 'drbd-9.0*']` | Default repo exclusion patterns shipped by the collection. Override to `[]` to disable |
+| `customer_repo_user_excludes` | `[]` | User-defined repo exclusion patterns, merged with `customer_repo_default_excludes` |
 | `customer_repo_staging` | `false` | Enable staging package URLs for repos matching `customer_repo_staging_repos` |
 | `customer_repo_staging_repos` | `['drbd-9*']` | List of glob patterns; repos matching any pattern use the staging URL when `customer_repo_staging` is `true` |
 
@@ -78,7 +79,7 @@ linbit_password: 'secretpassword'
 ansible-playbook playbook.yaml --ask-vault-pass
 ```
 
-Exclude LINBIT Pacemaker repositories:
+Exclude additional repositories (merged with default excludes):
 
 ```yaml
 - name: Register LINBIT nodes
@@ -90,7 +91,7 @@ Exclude LINBIT Pacemaker repositories:
       ansible.builtin.import_role:
         name: linbit.common.customer_repo
       vars:
-        customer_repo_excludes:
+        customer_repo_user_excludes:
           - 'pacemaker-*'
 ```
 

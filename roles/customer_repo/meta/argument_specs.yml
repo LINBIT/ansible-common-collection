@@ -49,13 +49,19 @@ argument_specs:
           - List of glob patterns to filter which repos are enabled.
           - Only repos matching at least one pattern are configured.
           - Empty list enables all repos.
-      customer_repo_excludes:
+      customer_repo_default_excludes:
+        type: list
+        elements: str
+        default: ['drbd-8*', 'drbd-9.0*']
+        description:
+          - Default repo exclusion patterns shipped by the collection.
+          - Override to C([]) to disable default exclusions.
+      customer_repo_user_excludes:
         type: list
         elements: str
         default: []
         description:
-          - List of glob patterns to exclude repos.
-          - Repos matching any pattern are disabled.
+          - User-defined repo exclusion patterns, merged with C(customer_repo_default_excludes).
           - Applied after C(customer_repo_includes).
       customer_repo_staging:
         type: bool
