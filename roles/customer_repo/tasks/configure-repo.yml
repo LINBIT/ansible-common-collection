@@ -64,11 +64,23 @@
 
 - name: Write LINBIT repo configuration
   ansible.builtin.template:
-    src: "{{ 'linbit-apt.list.j2' if ansible_facts['os_family'] | lower == 'debian' else 'linbit-rpm.repo.j2' }}"
+    src: "{{ _customer_repo_template }}"
     dest: "{{ _customer_repo_file }}"
     owner: root
     group: root
     mode: '0644'
+  notify: refresh_gpg_keys
+
+- name: Write LINBIT staging repo configuration
+  ansible.builtin.template:
+    src: "{{ _customer_repo_template }}"
+    dest: "{{ _customer_repo_staging_file }}"
+    owner: root
+    group: root
+    mode: '0644'
+  vars:
+    _for_staging: true
+  when: customer_repo_staging | bool
   notify: refresh_gpg_keys
 
 # Force GPG key and package manager cache refreshes

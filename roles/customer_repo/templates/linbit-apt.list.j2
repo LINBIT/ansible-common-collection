@@ -1,18 +1,23 @@
 # Managed by Ansible - linbit.common.customer_repo
+{%- macro to_regex(patterns) -%}
+  {%- if patterns -%}^({{ patterns | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') }})${%- endif -%}
+{%- endmacro %}
+
+{% set for_staging = _for_staging | default(false) %}
 {% set repos = _linbit_registration.repos %}
-{% set all_keys = repos | list | sort %}
-{% set included_re = customer_repo_includes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
-{% set excluded_re = _customer_repo_excludes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') %}
-{% set staging_re = (customer_repo_staging_repos | map('replace', '*', '.*') | map('replace', '?', '.') | join('|')) if customer_repo_staging | bool else '' %}
-{% for name in all_keys %}
+{% set included_re = to_regex(customer_repo_includes) %}
+{% set excluded_re = to_regex(_customer_repo_excludes) %}
+{% set staging_re = to_regex(customer_repo_staging_repos) %}
+
+{% for name in repos | list | sort %}
 {% set enabled = (not included_re or name | regex_search(included_re)) and (not excluded_re or not name | regex_search(excluded_re)) %}
+{% set matches_staging = staging_re and name | regex_search(staging_re) %}
 {% set config = repos[name]['config'] %}
-{% if staging_re and name | regex_search(staging_re) %}
-{% set config = config | replace('/' ~ _linbit_registration.nodehash ~ '/', '/' ~ _linbit_registration.nodehash ~ '/staging/') %}
-{% endif %}
-{% if enabled %}
+{% if for_staging and matches_staging %}
+{{ config | replace('/' ~ _linbit_registration.nodehash ~ '/', '/' ~ _linbit_registration.nodehash ~ '/staging/') }} {{ name }}
+{% elif not for_staging and enabled %}
 {{ config }} {{ name }}
-{% else %}
+{% elif not for_staging %}
 # {{ config }} {{ name }}
 {% endif %}
 {% endfor %}

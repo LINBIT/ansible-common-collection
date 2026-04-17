@@ -46,32 +46,39 @@ argument_specs:
         elements: str
         default: []
         description:
-          - List of glob patterns to filter which repos are enabled.
-          - Only repos matching at least one pattern are configured.
+          - List of glob patterns (anchored) to filter which repos are enabled in the production repo file.
+          - Only repos matching at least one pattern are enabled.
           - Empty list enables all repos.
       customer_repo_default_excludes:
         type: list
         elements: str
-        default: ['drbd-8*', 'drbd-9.0*']
+        default: ['drbd-8*', 'drbd-9.0*', 'pacemaker-3']
         description:
-          - Default repo exclusion patterns shipped by the collection.
+          - Default repo exclusion patterns (anchored) shipped by the collection.
+          - Applied to the production repo file only.
           - Override to C([]) to disable default exclusions.
       customer_repo_user_excludes:
         type: list
         elements: str
         default: []
         description:
-          - User-defined repo exclusion patterns, merged with C(customer_repo_default_excludes).
-          - Applied after C(customer_repo_includes).
+          - User-defined repo exclusion patterns (anchored), merged with C(customer_repo_default_excludes).
+          - Applied to the production repo file only.
       customer_repo_staging:
         type: bool
         default: false
         description:
-          - Enable staging package URLs for repos matching C(customer_repo_staging_repos).
+          - Additionally write a second repo file (C(linbit-staging.repo) on RPM, C(linbit-staging.list) on APT) containing staging versions of repos matching C(customer_repo_staging_repos).
+          - The production repo file is left unchanged.
+          - Staging repos are additive and partial, typically shipping only a small subset of packages under active testing, not a full 1:1 mirror of prod, so the production repo must stay enabled for everything else to resolve.
+          - Staging sections are suffixed with C(-staging) (RPM only; APT is differentiated by URL).
+          - Staging repo files set C(repo_gpgcheck=0) since staging repo metadata is not signed consistently.
       customer_repo_staging_repos:
         type: list
         elements: str
         default:
-          - "drbd-9*"
+          - "drbd-9"
         description:
-          - List of glob patterns for repos that use the staging URL when C(customer_repo_staging) is C(true).
+          - List of glob patterns (anchored) authoritative for the staging repo file.
+          - Repos matching any pattern are written to the staging file when C(customer_repo_staging) is C(true).
+          - Excludes (C(customer_repo_default_excludes), C(customer_repo_user_excludes)) do NOT apply to staging, so a repo that is a stub in production (for example C(pacemaker-3)) can still be pulled from staging if added here.

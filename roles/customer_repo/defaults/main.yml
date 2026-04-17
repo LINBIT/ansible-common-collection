@@ -25,4 +25,4 @@ _customer_repo_excludes: "{{ customer_repo_default_excludes + customer_repo_user
 # Enable staging package URLs for repos matching customer_repo_staging_repos.
 customer_repo_staging: false
 customer_repo_staging_repos:
-  - 'drbd-9*'
+  - 'drbd-9'

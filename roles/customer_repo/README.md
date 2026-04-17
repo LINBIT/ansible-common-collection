@@ -36,8 +36,8 @@ Role Variables
 | `customer_repo_includes` | `[]` | List of glob patterns; only repos matching at least one pattern are enabled. Empty list enables all repos |
 | `customer_repo_default_excludes` | `['drbd-8*', 'drbd-9.0*']` | Default repo exclusion patterns shipped by the collection. Override to `[]` to disable |
 | `customer_repo_user_excludes` | `[]` | User-defined repo exclusion patterns, merged with `customer_repo_default_excludes` |
-| `customer_repo_staging` | `false` | Enable staging package URLs for repos matching `customer_repo_staging_repos` |
-| `customer_repo_staging_repos` | `['drbd-9*']` | List of glob patterns; repos matching any pattern use the staging URL when `customer_repo_staging` is `true` |
+| `customer_repo_staging` | `false` | Additionally write a second repo file (`linbit-staging.repo` on RPM distros, `linbit-staging.list` on Debian/Ubuntu) containing staging versions of repos matching `customer_repo_staging_repos`. The production repo file is left unchanged. Staging repos are additive and partial — they typically ship only a small subset of packages under active testing, not a full 1:1 mirror of prod — so the production repo must stay enabled for everything else to resolve. Staging sections are suffixed with `-staging` and use `repo_gpgcheck=0` since staging repo metadata is not signed consistently. |
+| `customer_repo_staging_repos` | `['drbd-9']` | List of glob patterns (anchored, no implicit substring match). Repos matching any pattern are written to the staging file when `customer_repo_staging` is `true`. This list is authoritative for the staging file: `customer_repo_default_excludes` and `customer_repo_user_excludes` do NOT apply to staging, so a repo that is a stub in production (e.g. `pacemaker-3`) can still be pulled from staging if added here |
 
 Dependencies
 ------------

@@ -6,9 +6,20 @@
   register: _customer_repo_check
   when: not customer_repo_force_register
 
+- name: Check if LINBIT staging repo is configured
+  ansible.builtin.stat:
+    path: "{{ _customer_repo_staging_file }}"
+  register: _customer_repo_staging_check
+  when:
+    - not customer_repo_force_register
+    - customer_repo_staging | bool
+
 - name: Configure LINBIT customer repository
   ansible.builtin.include_tasks: configure-repo.yml
   when: >-
     customer_repo_force_register | bool or
     not _customer_repo_check.stat.exists or
-    _customer_repo_check.stat.size == 0
+    _customer_repo_check.stat.size == 0 or
+    (customer_repo_staging | bool and
+      (not _customer_repo_staging_check.stat.exists or
+       _customer_repo_staging_check.stat.size == 0))

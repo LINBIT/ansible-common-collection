@@ -1,10 +1,24 @@
 # SPDX-License-Identifier: MIT
 ---
+_customer_repo_paths: # noqa: var-naming[no-role-prefix]
+  redhat:
+    main: /etc/yum.repos.d/linbit.repo
+    staging: /etc/yum.repos.d/linbit-staging.repo
+    template: linbit-rpm.repo.j2
+  suse:
+    main: /etc/zypp/repos.d/linbit.repo
+    staging: /etc/zypp/repos.d/linbit-staging.repo
+    template: linbit-rpm.repo.j2
+  debian:
+    main: /etc/apt/sources.list.d/linbit.list
+    staging: /etc/apt/sources.list.d/linbit-staging.list
+    template: linbit-apt.list.j2
+
+_customer_repo_family: >- # noqa: var-naming[no-role-prefix]
+  {{ ansible_facts['os_family'] | lower }}
 _customer_repo_file: >- # noqa: var-naming[no-role-prefix]
-  {{
-    '/etc/yum.repos.d/linbit.repo'
-    if ansible_facts['os_family'] | lower == 'redhat'
-    else '/etc/zypp/repos.d/linbit.repo'
-    if ansible_facts['os_family'] | lower == 'suse'
-    else '/etc/apt/sources.list.d/linbit.list'
-  }}
+  {{ _customer_repo_paths[_customer_repo_family].main }}
+_customer_repo_staging_file: >- # noqa: var-naming[no-role-prefix]
+  {{ _customer_repo_paths[_customer_repo_family].staging }}
+_customer_repo_template: >- # noqa: var-naming[no-role-prefix]
+  {{ _customer_repo_paths[_customer_repo_family].template }}
