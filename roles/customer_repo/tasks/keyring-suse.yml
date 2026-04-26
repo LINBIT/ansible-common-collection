@@ -1,18 +1,17 @@
 # SPDX-License-Identifier: MIT
 ---
+- name: Ensure gpg2 is installed (required by rpm_key)
+  community.general.zypper:
+    name: gpg2
+    state: present
+
 - name: Install LINBIT GPG keyring (Zypper)
   community.general.zypper:
     name: "https://packages.linbit.com/public/linbit-keyring/{{ _linbit_distribution }}/linbit-keyring.rpm"
     state: latest
     disable_gpg_check: true
 
-- name: Check if LINBIT GPG key is already imported
-  ansible.builtin.shell:
-    cmd: rpm -q gpg-pubkey --qf '%{SUMMARY}\n' | grep -qi linbit
-  register: _linbit_key_check
-  changed_when: false
-  failed_when: false
-
-- name: Import LINBIT GPG keys into RPM database
-  ansible.builtin.command: rpm --import /etc/pki/rpm-gpg/RPM-GPG-KEY-linbit
-  when: _linbit_key_check.rc != 0
+- name: Import LINBIT GPG key into RPM database
+  ansible.builtin.rpm_key:
+    state: present
+    key: /etc/pki/rpm-gpg/RPM-GPG-KEY-linbit

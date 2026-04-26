@@ -28,7 +28,7 @@
   no_log: true
   when: _linbit_password_prompt is not skipped
 
-- name: Build LINBIT distribution string
+- name: Build LINBIT distribution string  # noqa: jinja[invalid]
   ansible.builtin.set_fact:
     # OL10+ maps to rhel10 until ol10 mirrors exist on packages.linbit.com.
     # Revert the ol10+ branch once linbit/linbit-manage-node#13 is resolved.
