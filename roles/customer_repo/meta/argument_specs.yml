@@ -40,7 +40,9 @@ argument_specs:
         type: bool
         default: false
         description:
-          - Pin Enterprise Linux repo URLs to the specific minor version (for example C(9.3)) rather than the major stream.
+          - >-
+            Pin Enterprise Linux repo URLs to the specific minor version (for example C(9.3)) rather than the
+            major stream.
       customer_repo_includes:
         type: list
         elements: str
@@ -69,15 +71,13 @@ argument_specs:
         default: false
         description:
           - >-
-            Additionally write a second repo file (C(linbit-staging.repo)
-            on RPM, C(linbit-staging.list) on APT) containing staging
-            versions of repos matching C(customer_repo_staging_repos).
+            Additionally write a second repo file (C(linbit-staging.repo) on RPM, C(linbit-staging.list) on APT)
+            containing staging versions of repos matching C(customer_repo_staging_repos).
           - The production repo file is left unchanged.
           - >-
-            Staging repos are additive and partial, typically shipping
-            only a small subset of packages under active testing, not a
-            full 1:1 mirror of prod, so the production repo must stay
-            enabled for everything else to resolve.
+            Staging repos are additive and partial, typically shipping only a small subset of packages under
+            active testing, not a full 1:1 mirror of prod, so the production repo must stay enabled for
+            everything else to resolve.
           - Staging sections are suffixed with C(-staging) (RPM only; APT is differentiated by URL).
           - Staging repo files set C(repo_gpgcheck=0) since staging repo metadata is not signed consistently.
       customer_repo_staging_repos:
@@ -89,7 +89,6 @@ argument_specs:
           - List of glob patterns (anchored) authoritative for the staging repo file.
           - Repos matching any pattern are written to the staging file when C(customer_repo_staging) is C(true).
           - >-
-            Excludes (C(customer_repo_default_excludes),
-            C(customer_repo_user_excludes)) do NOT apply to staging, so
-            a repo that is a stub in production (for example
-            C(pacemaker-3)) can still be pulled from staging if added here.
+            Excludes (C(customer_repo_default_excludes), C(customer_repo_user_excludes)) do NOT apply to staging,
+            so a repo that is a stub in production (for example C(pacemaker-3)) can still be pulled from
+            staging if added here.
