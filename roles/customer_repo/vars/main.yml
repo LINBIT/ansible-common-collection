@@ -22,3 +22,7 @@ _customer_repo_staging_file: >- # noqa: var-naming[no-role-prefix]
   {{ _customer_repo_paths[_customer_repo_family].staging }}
 _customer_repo_template: >- # noqa: var-naming[no-role-prefix]
   {{ _customer_repo_paths[_customer_repo_family].template }}
+
+# Combined excludes used by templates. Computed from public defaults and
+# user-supplied excludes; not intended to be set directly by callers.
+_customer_repo_excludes: "{{ customer_repo_default_excludes + customer_repo_user_excludes }}"  # noqa: var-naming[no-role-prefix]

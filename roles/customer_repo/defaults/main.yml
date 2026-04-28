@@ -19,9 +19,6 @@ customer_repo_default_excludes:
 # User-defined repo exclusions, merged with default_excludes.
 customer_repo_user_excludes: []
 
-# Combined excludes used by templates. Do not set directly.
-_customer_repo_excludes: "{{ customer_repo_default_excludes + customer_repo_user_excludes }}"
-
 # Enable staging package URLs for repos matching customer_repo_staging_repos.
 customer_repo_staging: false
 customer_repo_staging_repos:
