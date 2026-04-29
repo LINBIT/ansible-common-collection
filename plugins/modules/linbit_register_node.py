@@ -214,7 +214,7 @@ def api_request(module, url, method='POST', data=None, token=None):
     if token:
         headers['Authorization'] = 'Bearer ' + token
 
-    body = json.dumps(data).encode('utf-8') if data else None
+    body = json.dumps(data).encode('utf-8') if data is not None else None
 
     try:
         response = open_url(
