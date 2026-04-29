@@ -1,0 +1,1 @@
+plugins/modules/linbit_register_node.py validate-modules:missing-gplv3-license
