@@ -44,6 +44,13 @@ options:
     description: LINBIT API base URL.
     type: str
     default: https://api.linbit.com
+  distribution:
+    description:
+      - LINBIT distribution string identifying the OS family for repo selection
+        (for example C(ubuntu-noble), C(debian-trixie), C(rhel9), C(sles15)).
+      - Resolved by the calling role from Ansible facts.
+    type: str
+    required: true
 notes:
   - Fully idempotent. Saves registration data to C(/var/lib/drbd-support/registration.json)
     and skips the API call on subsequent runs when MAC addresses match.
