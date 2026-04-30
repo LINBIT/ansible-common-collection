@@ -3,30 +3,30 @@
 - name: Prompt for LINBIT portal username
   ansible.builtin.pause:
     prompt: "Enter LINBIT portal username (linbit_username)"
+  when: linbit_username is not defined or linbit_username | length == 0
   register: _linbit_username_prompt
   run_once: true  # noqa: run-once[task]
-  when: linbit_username is not defined or linbit_username | length == 0
 
 - name: Set linbit_username from prompt
   ansible.builtin.set_fact:
     linbit_username: "{{ _linbit_username_prompt.user_input }}"
-  run_once: true  # noqa: run-once[task]
   when: _linbit_username_prompt is not skipped
+  run_once: true  # noqa: run-once[task]
 
 - name: Prompt for LINBIT portal password
   ansible.builtin.pause:
     prompt: "Enter LINBIT portal password (linbit_password)"
+  when: linbit_password is not defined or linbit_password | length == 0
   register: _linbit_password_prompt
   run_once: true  # noqa: run-once[task]
   no_log: true
-  when: linbit_password is not defined or linbit_password | length == 0
 
 - name: Set linbit_password from prompt
   ansible.builtin.set_fact:
     linbit_password: "{{ _linbit_password_prompt.user_input }}"
+  when: _linbit_password_prompt is not skipped
   run_once: true  # noqa: run-once[task]
   no_log: true
-  when: _linbit_password_prompt is not skipped
 
 - name: Build LINBIT distribution string  # noqa: jinja[invalid]
   ansible.builtin.set_fact:
@@ -56,6 +56,9 @@
     distribution: "{{ _linbit_distribution }}"
     force: "{{ customer_repo_force_register | bool }}"
   register: _linbit_registration
+  until: _linbit_registration is succeeded
+  retries: 3
+  delay: 10
 
 - name: Install LINBIT GPG keyring
   ansible.builtin.include_tasks: "{{ item }}"

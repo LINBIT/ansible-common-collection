@@ -4,12 +4,20 @@
   ansible.builtin.dnf:
     name: gnupg2
     state: present
+  register: _linbit_gnupg2_install
+  until: _linbit_gnupg2_install is succeeded
+  retries: 3
+  delay: 10
 
 - name: Install LINBIT GPG keyring (DNF)  # noqa: package-latest
   ansible.builtin.dnf:
     name: "https://packages.linbit.com/public/linbit-keyring/{{ _linbit_distribution }}/linbit-keyring.rpm"
     state: latest
     disable_gpg_check: true
+  register: _linbit_keyring_install
+  until: _linbit_keyring_install is succeeded
+  retries: 3
+  delay: 10
 
 - name: Import LINBIT GPG key into RPM database
   ansible.builtin.rpm_key:

@@ -3,3 +3,7 @@
 - name: Install LINBIT GPG keyring (APT)
   ansible.builtin.apt:
     deb: https://packages.linbit.com/public/linbit-keyring.deb
+  register: _linbit_keyring_install
+  until: _linbit_keyring_install is succeeded
+  retries: 3
+  delay: 10
