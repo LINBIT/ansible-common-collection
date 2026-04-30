@@ -3,4 +3,8 @@
 - name: Refresh apt cache
   ansible.builtin.apt:
     update_cache: true
+  register: _public_repo_apt_refresh
+  until: _public_repo_apt_refresh is succeeded
+  retries: 3
+  delay: 10
   listen: refresh_apt_cache

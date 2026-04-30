@@ -8,6 +8,9 @@
     headers:
       Accept: "application/json"
   register: _launchpad_response
+  until: _launchpad_response is succeeded
+  retries: 3
+  delay: 10
 
 - name: Add LINBIT drbd9-stack PPA
   ansible.builtin.deb822_repository:

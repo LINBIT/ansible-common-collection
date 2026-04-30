@@ -5,6 +5,10 @@
     deb: "{{ public_repo_keyring_package_url }}"
     state: present
     allow_unauthenticated: true
+  register: _public_repo_keyring_install
+  until: _public_repo_keyring_install is succeeded
+  retries: 3
+  delay: 10
 
 - name: Add LINBIT drbd-9 public Proxmox repo
   ansible.builtin.deb822_repository:
