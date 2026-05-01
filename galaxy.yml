@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: MIT
 namespace: linbit
 name: common
-version: 0.9.5
+version: 0.9.6
 readme: README.md
 authors:
   - Ryan Ronnander <rronnander@linbit.com>
@@ -20,7 +20,7 @@ tags:
   - ppa
   - apt
 dependencies:
-  community.general: '>=10.4.0'
+  community.general: '>=10.4.0,<12.6.0'
 repository: https://gitlab.at.linbit.com/ansible-collections/linbit.common
 documentation: https://linbit.com/user-guides-and-product-documentation/
 homepage: https://linbit.com
