@@ -23,9 +23,9 @@ options:
     type: path
     default: /etc/drbd-proxy.license
   api_url:
-    description: LINBIT my.linbit.com base URL.
+    description: LINBIT API base URL.
     type: str
-    default: https://my.linbit.com
+    default: https://api.linbit.com
   force:
     description: Re-fetch the license even when C(dest) already exists.
     type: bool
@@ -114,7 +114,7 @@ def main():
     module = AnsibleModule(
         argument_spec=dict(
             dest=dict(type='path', default='/etc/drbd-proxy.license'),
-            api_url=dict(type='str', default='https://my.linbit.com'),
+            api_url=dict(type='str', default='https://api.linbit.com'),
             force=dict(type='bool', default=False),
         ),
         supports_check_mode=True,
@@ -167,7 +167,10 @@ def main():
         )
 
     url = api_url + '/v1/license-from-nodehash'
-    headers = {'Content-Type': 'application/json'}
+    headers = {
+        'Content-Type': 'application/json',
+        'User-agent': 'linbit_proxy_license-ansible-module',
+    }
 
     try:
         response = open_url(
