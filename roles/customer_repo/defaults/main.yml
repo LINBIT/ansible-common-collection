@@ -23,7 +23,6 @@ customer_repo_staging: false
 customer_repo_staging_repos:
   - 'drbd-9'
 
-# Generate /etc/drbd-proxy.license after registration, opt-in only
+# Fetch DRBD Proxy license after registration - opt-in only, requires linbit_cluster_id
 customer_repo_install_proxy_license: false
 customer_repo_proxy_license_path: /etc/drbd-proxy.license
-customer_repo_manage_node_script_url: https://my.linbit.com/linbit-manage-node.py

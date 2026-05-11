@@ -94,16 +94,12 @@ argument_specs:
         type: bool
         default: false
         description:
-          - Fetch C(/etc/drbd-proxy.license) after registration.
+          - Fetch C(/etc/drbd-proxy.license) after registration via the
+            M(linbit.common.linbit_proxy_license) module.
+          - Skipped silently unless C(linbit_cluster_id) is also set.
           - Interactive runs prompt with a y/N when this is not set in inventory.
-          - No-op when the contract has no DRBD Proxy seat.
       customer_repo_proxy_license_path:
         type: str
         default: /etc/drbd-proxy.license
         description:
           - Destination path for the fetched DRBD Proxy license file.
-      customer_repo_manage_node_script_url:
-        type: str
-        default: https://my.linbit.com/linbit-manage-node.py
-        description:
-          - URL of the upstream C(linbit-manage-node.py) helper script.
