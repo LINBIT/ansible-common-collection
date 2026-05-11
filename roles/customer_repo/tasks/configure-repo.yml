@@ -28,6 +28,19 @@
   run_once: true  # noqa: run-once[task]
   no_log: true
 
+- name: Prompt for DRBD Proxy license install
+  ansible.builtin.pause:
+    prompt: "Install DRBD Proxy license? [y/N]"
+  when: _linbit_username_prompt is not skipped
+  register: _customer_repo_proxy_prompt
+  run_once: true  # noqa: run-once[task]
+
+- name: Set customer_repo_install_proxy_license from prompt
+  ansible.builtin.set_fact:
+    customer_repo_install_proxy_license: "{{ _customer_repo_proxy_prompt.user_input | lower in ['y', 'yes'] }}"
+  when: _customer_repo_proxy_prompt is not skipped
+  run_once: true  # noqa: run-once[task]
+
 - name: Build LINBIT distribution string  # noqa: jinja[invalid]
   ansible.builtin.set_fact:
     # OL10+ maps to rhel10 until ol10 mirrors exist on packages.linbit.com.

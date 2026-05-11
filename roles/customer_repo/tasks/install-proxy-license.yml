@@ -1,0 +1,20 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Fetch linbit-manage-node.py
+  ansible.builtin.get_url:
+    url: "{{ customer_repo_manage_node_script_url }}"
+    dest: /usr/local/sbin/linbit-manage-node.py
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Fetch DRBD Proxy license
+  ansible.builtin.command:
+    cmd: /usr/local/sbin/linbit-manage-node.py -p
+    creates: "{{ customer_repo_proxy_license_path }}"
+  register: _customer_repo_proxy_license
+  changed_when: _customer_repo_proxy_license.rc == 0
+  failed_when:
+    - _customer_repo_proxy_license.rc != 0
+    - "'no license found' not in (_customer_repo_proxy_license.stderr | default(''))"
+    - "'no license found' not in (_customer_repo_proxy_license.stdout | default(''))"

@@ -23,3 +23,7 @@
     (customer_repo_staging | bool and
       (not _customer_repo_staging_check.stat.exists or
        _customer_repo_staging_check.stat.size == 0))
+
+- name: Install DRBD Proxy license
+  ansible.builtin.include_tasks: install-proxy-license.yml
+  when: customer_repo_install_proxy_license | bool
