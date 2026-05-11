@@ -53,7 +53,7 @@ argument_specs:
       customer_repo_default_excludes:
         type: list
         elements: str
-        default: ['drbd-8*', 'drbd-9.0*', 'pacemaker-3']
+        default: ['drbd-8*', 'drbd-9.0*']
         description:
           - Default repo exclusion patterns (anchored) shipped by the collection.
           - Applied to the production repo file only.
@@ -89,8 +89,7 @@ argument_specs:
           - Repos matching any pattern are written to the staging file when C(customer_repo_staging) is C(true).
           - >-
             Excludes (C(customer_repo_default_excludes), C(customer_repo_user_excludes)) do NOT apply to staging,
-            so a repo that is a stub in production (for example C(pacemaker-3)) can still be pulled from
-            staging if added here.
+            so a repo that is excluded in production can still be pulled from staging if added here.
       customer_repo_install_proxy_license:
         type: bool
         default: false

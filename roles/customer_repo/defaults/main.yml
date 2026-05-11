@@ -14,7 +14,6 @@ customer_repo_includes: []
 customer_repo_default_excludes:
   - 'drbd-8*'
   - 'drbd-9.0*'
-  - 'pacemaker-3'  # empty repo, remove when populated
 
 # User-defined repo exclusions, merged with default_excludes.
 customer_repo_user_excludes: []
