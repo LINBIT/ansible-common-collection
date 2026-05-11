@@ -26,4 +26,7 @@
 
 - name: Install DRBD Proxy license
   ansible.builtin.include_tasks: install-proxy-license.yml
-  when: customer_repo_install_proxy_license | bool
+  when:
+    - customer_repo_install_proxy_license | bool
+    - linbit_cluster_id is defined
+    - linbit_cluster_id | string | length > 0
