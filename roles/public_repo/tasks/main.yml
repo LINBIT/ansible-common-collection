@@ -3,13 +3,21 @@
 - name: Assert supported OS (Proxmox VE or Ubuntu)
   ansible.builtin.assert:
     that:
-      - >-
-        ansible_facts | linbit.common.is_pve or
-        ansible_facts['distribution'] | lower == 'ubuntu'
+      - ansible_facts['os_family'] | lower == 'debian'
+    fail_msg: >-
+      public_repo supports Proxmox VE and Ubuntu only.
+      Detected os_family={{ ansible_facts['os_family'] }}.
+
+- name: Warn if Debian detected without PVE kernel
+  ansible.builtin.debug:
     msg: >
       public_repo supports Proxmox VE and Ubuntu only.
       Plain Debian is not supported.
-    quiet: true
+      LINBIT does not test this combination and other roles may misbehave.
+      Proceeding with the Proxmox repo configuration anyway.
+  when:
+    - not ansible_facts | linbit.common.is_pve
+    - ansible_facts['distribution'] | lower != 'ubuntu'
 
 - name: Check if LINBIT public repo is configured
   ansible.builtin.stat:
@@ -26,7 +34,7 @@
 - name: Configure LINBIT public repo (Proxmox VE)
   ansible.builtin.include_tasks: proxmox.yml
   when:
-    - ansible_facts | linbit.common.is_pve
+    - ansible_facts['distribution'] | lower == 'debian'
     - not _public_repo_check.stat.exists
 
 - name: Configure LINBIT PPA (Ubuntu)
