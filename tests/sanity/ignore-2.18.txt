@@ -1,1 +1,2 @@
+plugins/modules/linbit_proxy_license.py validate-modules:missing-gplv3-license
 plugins/modules/linbit_register_node.py validate-modules:missing-gplv3-license

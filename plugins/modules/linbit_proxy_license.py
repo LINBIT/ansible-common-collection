@@ -8,7 +8,7 @@ DOCUMENTATION = r'''
 ---
 module: linbit_proxy_license
 short_description: Fetch and write the DRBD Proxy license for a registered node
-version_added: "0.10.0"
+version_added: "0.9.7"
 description:
   - Fetches the DRBD Proxy license file from the LINBIT customer portal
     for a node already registered via M(linbit.common.linbit_register_node).
@@ -22,14 +22,20 @@ options:
     description: Destination path for the DRBD Proxy license file.
     type: path
     default: /etc/drbd-proxy.license
+    required: false
   api_url:
     description: LINBIT API base URL.
     type: str
     default: https://api.linbit.com
+    required: false
   force:
     description: Re-fetch the license even when C(dest) already exists.
     type: bool
     default: false
+    required: false
+notes:
+  - Fully idempotent. Skips the API call if the license file already exists unless C(force) is true.
+  - Supports C(check_mode).
 seealso:
   - module: linbit.common.linbit_register_node
 author:
@@ -39,6 +45,7 @@ author:
 EXAMPLES = r'''
 - name: Fetch the DRBD Proxy license after registration
   linbit.common.linbit_proxy_license:
+    dest: /etc/drbd-proxy.license
 
 - name: Fetch to a custom path
   linbit.common.linbit_proxy_license:
@@ -49,7 +56,7 @@ RETURN = r'''
 license_path:
   description: Path the license file was written to.
   type: str
-  returned: success
+  returned: always
 '''
 
 import base64

@@ -8,7 +8,7 @@ DOCUMENTATION = r'''
 ---
 module: linbit_register_node
 short_description: Register a node with the LINBIT customer portal
-version_added: "0.10.0"
+version_added: "0.9.7"
 description:
   - Registers a node with the LINBIT customer portal API.
   - Gathers permanent Ethernet MAC addresses from sysfs for node identification.
