@@ -73,6 +73,37 @@
   retries: 3
   delay: 10
 
+- name: Find legacy LINBIT apt repository files (APT)
+  ansible.builtin.find:
+    paths: /etc/apt/sources.list.d/
+    patterns:
+      - 'linbit.list'
+      - 'linbit-staging.list'
+      - 'drbd-*.sources'
+      - 'drbd-proxy-*.sources'
+  when: ansible_facts['os_family'] | lower == 'debian'
+  register: _customer_repo_legacy_files
+
+- name: Remove legacy LINBIT apt repository files (APT)
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: absent
+  when: ansible_facts['os_family'] | lower == 'debian'
+  loop: "{{ _customer_repo_legacy_files.files | default([]) }}"
+  loop_control:
+    label: "{{ item.path }}"
+
+- name: Fetch LINBIT signing key (APT)
+  ansible.builtin.get_url:
+    url: https://packages.linbit.com/package-signing-pubkey.asc
+    dest: /etc/apt/keyrings/linbit.asc
+    mode: '0644'
+  when: ansible_facts['os_family'] | lower == 'debian'
+  register: _customer_repo_keyring_dl
+  until: _customer_repo_keyring_dl is succeeded
+  retries: 3
+  delay: 10
+
 - name: Install LINBIT GPG keyring
   ansible.builtin.include_tasks: "{{ item }}"
   with_first_found:
@@ -82,16 +113,17 @@
         - "{{ role_path }}/tasks"
       skip: true
 
-- name: Write LINBIT repo configuration
+- name: Write LINBIT repo configuration (RPM)
   ansible.builtin.template:
     src: "{{ _customer_repo_template }}"
     dest: "{{ _customer_repo_file }}"
     owner: root
     group: root
     mode: '0644'
+  when: ansible_facts['os_family'] | lower != 'debian'
   notify: refresh_gpg_keys
 
-- name: Write LINBIT staging repo configuration
+- name: Write LINBIT staging repo configuration (RPM)
   ansible.builtin.template:
     src: "{{ _customer_repo_template }}"
     dest: "{{ _customer_repo_staging_file }}"
@@ -100,7 +132,70 @@
     mode: '0644'
   vars:
     _for_staging: true
-  when: customer_repo_staging | bool
+  when:
+    - ansible_facts['os_family'] | lower != 'debian'
+    - customer_repo_staging | bool
+  notify: refresh_gpg_keys
+
+- name: Compute LINBIT repository structure (APT)
+  ansible.builtin.set_fact:
+    _customer_repo_apt_uri: "{{ _first.split()[2] }}"
+    _customer_repo_apt_suite: "{{ _first.split()[3] }}"
+    _customer_repo_apt_prod_components: "{{ _prod }}"
+    _customer_repo_apt_staging_components: "{{ _staging }}"
+  vars:
+    _first: "{{ (_linbit_registration.repos.values() | list | first).config }}"
+    _includes_re: >-
+      {%- if customer_repo_includes -%}
+        ^({{ customer_repo_includes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') }})$
+      {%- else -%}
+        .*
+      {%- endif -%}
+    _excludes_re: >-
+      {%- if _customer_repo_excludes -%}
+        ^({{ _customer_repo_excludes | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') }})$
+      {%- else -%}
+        ^$
+      {%- endif -%}
+    _staging_re: >-
+      {%- if customer_repo_staging_repos -%}
+        ^({{ customer_repo_staging_repos | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') }})$
+      {%- else -%}
+        ^$
+      {%- endif -%}
+    _prod: >-
+      {{ _linbit_registration.repos.keys() | list
+         | select('match', _includes_re) | reject('match', _excludes_re) | list }}
+    _staging: >-
+      {{ (_linbit_registration.repos.keys() | list
+         | select('match', _staging_re) | list) if (customer_repo_staging | bool) else [] }}
+  when: ansible_facts['os_family'] | lower == 'debian'
+
+- name: Configure LINBIT repository (APT)
+  ansible.builtin.deb822_repository:
+    name: linbit
+    types: deb
+    uris: "{{ _customer_repo_apt_uri }}"
+    suites: "{{ _customer_repo_apt_suite }}"
+    components: "{{ _customer_repo_apt_prod_components }}"
+    signed_by: /etc/apt/keyrings/linbit.asc
+  when:
+    - ansible_facts['os_family'] | lower == 'debian'
+    - _customer_repo_apt_prod_components | length > 0
+  notify: refresh_gpg_keys
+
+- name: Configure LINBIT staging repository (APT)
+  ansible.builtin.deb822_repository:
+    name: linbit-staging
+    types: deb
+    uris: "{{ _customer_repo_apt_uri | replace('/' ~ _linbit_registration.nodehash ~ '/', '/' ~ _linbit_registration.nodehash ~ '/staging/') }}"
+    suites: "{{ _customer_repo_apt_suite }}"
+    components: "{{ _customer_repo_apt_staging_components }}"
+    trusted: true
+  when:
+    - ansible_facts['os_family'] | lower == 'debian'
+    - customer_repo_staging | bool
+    - _customer_repo_apt_staging_components | length > 0
   notify: refresh_gpg_keys
 
 # Force GPG key and package manager cache refreshes

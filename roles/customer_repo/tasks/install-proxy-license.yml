@@ -3,3 +3,7 @@
 - name: Fetch DRBD Proxy license
   linbit.common.linbit_proxy_license:
     dest: "{{ customer_repo_proxy_license_path }}"
+  register: _customer_repo_proxy_license
+  until: _customer_repo_proxy_license is succeeded
+  retries: 3
+  delay: 10

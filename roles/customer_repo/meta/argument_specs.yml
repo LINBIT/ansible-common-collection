@@ -53,7 +53,7 @@ argument_specs:
       customer_repo_default_excludes:
         type: list
         elements: str
-        default: ['drbd-8*', 'drbd-9.0*']
+        default: ['drbd-8*', 'drbd-9.0*', 'drbd-proxy-3*']
         description:
           - Default repo exclusion patterns (anchored) shipped by the collection.
           - Applied to the production repo file only.
@@ -70,15 +70,16 @@ argument_specs:
         default: false
         description:
           - >-
-            Additionally write a second repo file (C(linbit-staging.repo) on RPM, C(linbit-staging.list) on APT)
+            Additionally write a second repo file (C(linbit-staging.repo) on RPM, C(linbit-staging.sources) on APT)
             containing staging versions of repos matching C(customer_repo_staging_repos).
           - The production repo file is left unchanged.
           - >-
             Staging repos are additive and partial, typically shipping only a small subset of packages under
             active testing, not a full 1:1 mirror of prod, so the production repo must stay enabled for
             everything else to resolve.
-          - Staging sections are suffixed with C(-staging) (RPM only; APT is differentiated by URL).
-          - Staging repo files set C(repo_gpgcheck=0) since staging repo metadata is not signed consistently.
+          - >-
+            RPM staging sections are suffixed with C(-staging) and set C(repo_gpgcheck=0) since staging metadata
+            is not signed consistently; APT staging sets C(Trusted=yes) for the same reason.
       customer_repo_staging_repos:
         type: list
         elements: str

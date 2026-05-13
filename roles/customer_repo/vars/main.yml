@@ -9,10 +9,6 @@ _customer_repo_paths:
     main: /etc/zypp/repos.d/linbit.repo
     staging: /etc/zypp/repos.d/linbit-staging.repo
     template: linbit-rpm.repo.j2
-  debian:
-    main: /etc/apt/sources.list.d/linbit.list
-    staging: /etc/apt/sources.list.d/linbit-staging.list
-    template: linbit-apt.list.j2
 
 _customer_repo_family: >-
   {{ ansible_facts['os_family'] | lower }}
