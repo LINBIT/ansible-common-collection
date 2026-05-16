@@ -1,0 +1,26 @@
+objects: {}
+plugins:
+  become: {}
+  cache: {}
+  callback: {}
+  cliconf: {}
+  connection: {}
+  httpapi: {}
+  inventory: {}
+  lookup: {}
+  module:
+    linbit_proxy_license:
+      description: Fetch and write the DRBD Proxy license for a registered node
+      name: linbit_proxy_license
+      namespace: ''
+      version_added: 0.9.7
+    linbit_register_node:
+      description: Register a node with the LINBIT customer portal
+      name: linbit_register_node
+      namespace: ''
+      version_added: 0.9.7
+  netconf: {}
+  shell: {}
+  strategy: {}
+  vars: {}
+version: 0.9.7

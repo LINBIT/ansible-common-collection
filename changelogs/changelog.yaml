@@ -1,0 +1,28 @@
+---
+ancestor: 0.9.6
+releases:
+  0.9.7:
+    changes:
+      bugfixes:
+        - 'public_repo - warn instead of failing the play on plain Debian nodes (non-Proxmox
+          VE), so unrelated repo configuration can proceed.
+
+          '
+      minor_changes:
+        - 'customer_repo - drop ``pacemaker-3`` from ``default_excludes`` so the Pacemaker
+          3 repo is enabled by default.
+
+          '
+        - 'customer_repo - optional DRBD Proxy license fetch via the new ``linbit_proxy_license``
+          module, gated on ``linbit_cluster_id`` being defined and non-empty.
+
+          '
+    fragments:
+      - customer_repo_pacemaker_3.yml
+      - customer_repo_proxy_license.yml
+      - public_repo_plain_debian.yml
+    modules:
+      - description: Fetch and write the DRBD Proxy license for a registered node.
+        name: linbit_proxy_license
+        namespace: ''
+    release_date: '2026-05-13'
