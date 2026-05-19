@@ -1,3 +1,4 @@
+{# SPDX-License-Identifier: MIT #}
 # Managed by Ansible - linbit.common.customer_repo
 {%- macro to_regex(patterns) -%}
   {%- if patterns -%}^({{ patterns | map('replace', '*', '.*') | map('replace', '?', '.') | join('|') }})${%- endif -%}

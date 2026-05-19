@@ -27,3 +27,9 @@ This collection has no dependencies on other LINBIT collections.
 ## Dependencies
 
 None.
+
+## License
+
+MIT License.
+
+See [LICENSE](LICENSE) for the full text.
