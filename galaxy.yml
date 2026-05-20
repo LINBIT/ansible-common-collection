@@ -11,6 +11,7 @@ authors:
 description: LINBIT portal node registration and public repo setup for Ubuntu and Proxmox VE
 license:
   - MIT
+  - GPL-3.0-or-later
 tags:
   - infrastructure
   - linbit
