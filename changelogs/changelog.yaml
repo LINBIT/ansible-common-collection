@@ -26,3 +26,21 @@ releases:
         name: linbit_proxy_license
         namespace: ''
     release_date: '2026-05-13'
+  0.9.8:
+    changes:
+      minor_changes:
+        - 'customer_repo - convert APT repository configuration to deb822 format via
+          ``ansible.builtin.deb822_repository``, replacing the legacy ``sources.list``
+          template.
+
+          '
+        - 'plugins/filter - SPDX headers on ``is_pve`` and ``is_uek`` flipped from
+          MIT to GPL-3.0-or-later for Ansible community package inclusion compliance.
+          ``galaxy.yml`` now declares both MIT and GPL-3.0-or-later. Modules and ``module_utils``
+          remain MIT.
+
+          '
+    fragments:
+      - customer_repo_deb822.yml
+      - gpl-filter-plugins.yml
+    release_date: '2026-05-21'
