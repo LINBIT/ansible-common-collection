@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >
+    customer_repo - convert APT repository configuration to deb822 format
+    via ``ansible.builtin.deb822_repository``, replacing the legacy
+    ``sources.list`` template.
