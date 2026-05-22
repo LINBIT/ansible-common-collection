@@ -28,8 +28,11 @@ This collection has no dependencies on other LINBIT collections.
 
 None.
 
-## License
+## Licensing
 
-MIT License.
+This collection is primarily licensed and distributed as a whole under the MIT License. See [LICENSE](LICENSE) for the full text.
 
-See [LICENSE](LICENSE) for the full text.
+The following files are licensed under the [GNU General Public License v3.0 or later](https://www.gnu.org/licenses/gpl-3.0.txt), as required by the Ansible community package inclusion rules:
+
+- [`plugins/filter/is_pve.py`](plugins/filter/is_pve.py)
+- [`plugins/filter/is_uek.py`](plugins/filter/is_uek.py)
