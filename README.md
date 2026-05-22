@@ -8,6 +8,10 @@ The `linbit.common` Ansible collection providing shared utilities for the [LINBI
 
 Includes LINBIT customer portal registration, public package repository setup for Ubuntu LTS and Proxmox VE, [DRBD®](https://linbit.com/drbd/) Proxy license retrieval, and kernel-detection filter plugins.
 
+## Requirements
+
+- ansible-core 2.16 or newer
+
 ## Roles
 
 | Role | Description |
@@ -28,10 +32,6 @@ Includes LINBIT customer portal registration, public package repository setup fo
 |---|---|
 | `is_pve` | Returns true when running on a Proxmox VE kernel (`'pve'` in `ansible_kernel`). Used to gate Proxmox-specific tasks. |
 | `is_uek` | Returns true when running on an Oracle Linux UEK kernel (`'uek'` in `ansible_kernel`). Used to choose between RHCK and UEK kernel-devel packages. |
-
-## Dependencies
-
-None.
 
 ## Licensing
 
