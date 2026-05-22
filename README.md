@@ -16,8 +16,8 @@ Includes LINBIT customer portal registration, public package repository setup fo
 
 | Role | Description |
 |---|---|
-| `customer_repo` | Register nodes with the LINBIT subscription portal (`my.linbit.com`) |
-| `public_repo` | Configure the LINBIT public APT repository for Ubuntu (PPA) and Proxmox VE |
+| [`customer_repo`](roles/customer_repo/README.md) | Register nodes with the LINBIT subscription portal (`my.linbit.com`) |
+| [`public_repo`](roles/public_repo/README.md) | Configure the LINBIT public APT repository for Ubuntu (PPA) and Proxmox VE |
 
 ## Modules
 
