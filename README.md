@@ -36,3 +36,9 @@ The following files are licensed under the [GNU General Public License v3.0 or l
 
 - [`plugins/filter/is_pve.py`](plugins/filter/is_pve.py)
 - [`plugins/filter/is_uek.py`](plugins/filter/is_uek.py)
+
+## Authors
+
+Created in 2026 by [Ryan Ronnander](https://github.com/ryan-ronnander) on behalf of [LINBIT](https://linbit.com).
+
+Inspired by pre-collection Ansible contributions from [Matt Kereczman](https://github.com/kermat), [Ryan Ronnander](https://github.com/ryan-ronnander), [Michael Troutman](https://github.com/emteelb), and [Devin Vance](https://github.com/dvance).
