@@ -12,6 +12,33 @@ Includes LINBIT customer portal registration, public package repository setup fo
 
 - ansible-core 2.16 or newer
 
+## Installation
+
+Install the collection with the Ansible Galaxy command-line tool:
+
+```bash
+# Install from GitHub until published in Ansible Galaxy
+ansible-galaxy collection install git+https://github.com/LINBIT/ansible-common-collection.git
+```
+
+You can also include it in a `requirements.yml` file and install it with `ansible-galaxy collection install -r requirements.yml`:
+
+```yaml
+collections:
+  - name: linbit.common
+    source: https://github.com/LINBIT/ansible-common-collection.git
+    type: git
+```
+
+To upgrade to the latest available version:
+
+```bash
+# Upgrade from GitHub until published in Ansible Galaxy
+ansible-galaxy collection install --upgrade git+https://github.com/LINBIT/ansible-common-collection.git
+```
+
+See [using Ansible collections](https://docs.ansible.com/ansible/latest/collections_guide/) for more details.
+
 ## Roles
 
 | Role | Description |
