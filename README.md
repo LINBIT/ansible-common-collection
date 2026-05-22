@@ -1,7 +1,12 @@
-# Ansible Collection - linbit.common
+# LINBIT Common Collection
 
-Handles LINBIT portal node registration and public LINBIT package repository setup.
-This collection has no dependencies on other LINBIT collections.
+The `linbit.common` Ansible collection providing shared utilities for the [LINBIT®](https://linbit.com) Ansible collections:
+
+- [`linbit.drbd`](https://github.com/LINBIT/ansible-drbd-collection)
+- [`linbit.drbd_reactor`](https://github.com/LINBIT/ansible-drbd_reactor-collection)
+- [`linbit.linstor`](https://github.com/LINBIT/ansible-linstor-collection)
+
+Includes LINBIT customer portal registration, public package repository setup for Ubuntu LTS and Proxmox VE, [DRBD®](https://linbit.com/drbd/) Proxy license retrieval, and kernel-detection filter plugins.
 
 ## Roles
 
