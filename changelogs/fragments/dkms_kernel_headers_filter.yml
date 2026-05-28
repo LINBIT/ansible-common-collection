@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >
+    New ``dkms_kernel_headers`` filter plugin - returns the kernel-header
+    packages DKMS needs to build out-of-tree modules for the running kernel,
+    selecting the correct packages per kernel flavor/edition (generic, aws,
+    cloud-amd64, Proxmox VE, ...) instead of assuming the stock or generic
+    flavor.
