@@ -21,7 +21,7 @@ tags:
   - ppa
   - apt
 dependencies:
-  community.general: '>=10.4.0,<12.6.0'
+  community.general: '>=10.4.0'
 repository: https://github.com/LINBIT/ansible-common-collection
 documentation: https://github.com/LINBIT/ansible-common-collection
 homepage: https://linbit.com
