@@ -1,5 +1,4 @@
-public_repo
-===========
+# public_repo
 
 Configure the LINBIT public package repository for Ubuntu and Proxmox VE.
 
@@ -8,13 +7,11 @@ On **Proxmox VE** nodes, installs `linbit-keyring` and adds the LINBIT public AP
 
 > **Note:** Plain Debian (without Proxmox VE) is not supported.
 
-Requirements
-------------
+## Requirements
 
 ansible-core >= 2.15 (for `deb822_repository` module).
 
-Role Variables
---------------
+## Role Variables
 
 See `defaults/main.yml`.
 
@@ -26,13 +23,11 @@ See `defaults/main.yml`.
 | `public_repo_proxmox_repo` | `http://packages.linbit.com/public/` | LINBIT public APT repo URL |
 | `public_repo_gpg_path` | `/etc/apt/trusted.gpg.d/linbit-keyring.gpg` | GPG key path |
 
-Dependencies
-------------
+## Dependencies
 
 None.
 
-Example Playbook
-----------------
+## Example Playbook
 
 ```yaml
 - name: Configure LINBIT public repo
@@ -45,12 +40,10 @@ Example Playbook
         name: linbit.common.public_repo
 ```
 
-License
--------
+## License
 
 MIT
 
-Author Information
-------------------
+## Author Information
 
 [LINBIT](https://linbit.com)

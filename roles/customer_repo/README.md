@@ -1,5 +1,4 @@
-customer_repo
-=============
+# customer_repo
 
 Register nodes with the LINBIT customer portal and configure LINBIT package repositories.
 
@@ -11,8 +10,7 @@ See [packages.linbit.com](https://packages.linbit.com/) to register nodes manual
 Registration data is cached in `/var/lib/drbd-support/registration.json` for idempotency.
 Re-registering can be forced by setting `customer_repo_force_register: true`.
 
-Requirements
-------------
+## Requirements
 
 LINBIT customer portal credentials must be provided as Ansible variables (for example in `group_vars`, `host_vars`, or `--extra-vars`):
 
@@ -27,8 +25,7 @@ If `linbit_username` or `linbit_password` is undefined or empty, the role prompt
 Prompts run once regardless of how many hosts are in the play.
 The password prompt is suppressed from Ansible output (`no_log: true`).
 
-Role Variables
---------------
+## Role Variables
 
 | Variable | Default | Description |
 |---|---|---|
@@ -50,13 +47,11 @@ Setting `customer_repo_staging: true` writes a second repo file (`linbit-staging
 That pattern list is authoritative for the staging file: `customer_repo_default_excludes` and `customer_repo_user_excludes` do not apply to it, so a repo excluded in production can still be pulled from staging by adding it here.
 Staging metadata is not signed consistently, so RPM staging sections are suffixed with `-staging` and set `repo_gpgcheck=0`, and APT staging sets `Trusted: yes`.
 
-Dependencies
-------------
+## Dependencies
 
 None.
 
-Example Playbook
-----------------
+## Example Playbook
 
 Enable all available LINBIT repositories:
 
@@ -106,12 +101,10 @@ Exclude additional repositories (merged with default excludes):
           - 'pacemaker-*'
 ```
 
-License
--------
+## License
 
 MIT
 
-Author Information
-------------------
+## Author Information
 
 [LINBIT](https://linbit.com)
