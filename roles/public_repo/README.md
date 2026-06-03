@@ -11,7 +11,7 @@ On **Proxmox VE** nodes, installs `linbit-keyring` and adds the LINBIT public AP
 
 ansible-core >= 2.15 (for `deb822_repository` module).
 
-## Role Variables
+## Role variables
 
 See `defaults/main.yml`.
 
@@ -27,7 +27,7 @@ See `defaults/main.yml`.
 
 None.
 
-## Example Playbook
+## Example playbook
 
 ```yaml
 - name: Configure LINBIT public repo
@@ -44,6 +44,6 @@ None.
 
 MIT
 
-## Author Information
+## Author information
 
 [LINBIT](https://linbit.com)

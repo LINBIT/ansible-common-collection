@@ -25,7 +25,7 @@ If `linbit_username` or `linbit_password` is undefined or empty, the role prompt
 Prompts run once regardless of how many hosts are in the play.
 The password prompt is suppressed from Ansible output (`no_log: true`).
 
-## Role Variables
+## Role variables
 
 | Variable | Default | Description |
 |---|---|---|
@@ -51,7 +51,7 @@ Staging metadata is not signed consistently, so RPM staging sections are suffixe
 
 None.
 
-## Example Playbook
+## Example playbook
 
 Enable all available LINBIT repositories:
 
@@ -105,6 +105,6 @@ Exclude additional repositories (merged with default excludes):
 
 MIT
 
-## Author Information
+## Author information
 
 [LINBIT](https://linbit.com)

@@ -53,7 +53,7 @@ See [using Ansible collections](https://docs.ansible.com/ansible/latest/collecti
 | `linbit_register_node` | Register a node with the LINBIT customer portal API. Used internally by `customer_repo`; can also be invoked directly for advanced workflows. |
 | `linbit_proxy_license` | Fetch the DRBD Proxy license file for a registered node. Reads identity from `/var/lib/drbd-support/registration.json` and POSTs to `my.linbit.com/v1/license-from-nodehash`. |
 
-## Filter Plugins
+## Filter plugins
 
 | Filter | Description |
 |---|---|
