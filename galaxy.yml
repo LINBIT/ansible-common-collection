@@ -5,7 +5,7 @@ version: 0.9.9
 readme: README.md
 authors:
   - Ryan Ronnander <rronnander@linbit.com>
-description: LINBIT portal node registration and public repo setup for Ubuntu and Proxmox VE
+description: Shared roles, modules, and filter plugins used across the LINBIT Ansible collections
 license:
   - MIT
   - GPL-3.0-or-later
