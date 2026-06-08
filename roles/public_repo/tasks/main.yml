@@ -1,5 +1,12 @@
 # SPDX-License-Identifier: MIT
 ---
+- name: Gather OS facts for OS-specific vars
+  ansible.builtin.setup:
+    gather_subset:
+      - "!all"
+      - min
+  when: ansible_facts['os_family'] is not defined
+
 - name: Assert supported OS (Proxmox VE or Ubuntu)
   ansible.builtin.assert:
     that:

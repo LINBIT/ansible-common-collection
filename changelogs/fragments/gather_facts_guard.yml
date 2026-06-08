@@ -1,0 +1,10 @@
+# SPDX-License-Identifier: MIT
+---
+bugfixes:
+  - >
+    customer_repo, public_repo - gather minimal OS facts when they are
+    not already present, so the roles work when invoked with tag filters
+    that skip the implicit fact-gathering task or under
+    ``gather_facts: false``. Without this, fact-dependent expressions such
+    as the LINBIT distribution string failed with "object of type 'dict'
+    has no attribute 'os_family'".

@@ -1,5 +1,12 @@
 # SPDX-License-Identifier: MIT
 ---
+- name: Gather OS facts for OS-specific vars
+  ansible.builtin.setup:
+    gather_subset:
+      - "!all"
+      - min
+  when: ansible_facts['os_family'] is not defined
+
 - name: Check if LINBIT node is already registered
   ansible.builtin.stat:
     path: /var/lib/drbd-support/registration.json
