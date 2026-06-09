@@ -2,8 +2,8 @@
 
 Configure the LINBIT public package repository for Ubuntu and Proxmox VE.
 
-On **Ubuntu** nodes, adds the [LINBIT drbd9-stack Launchpad PPA](https://launchpad.net/~linbit/+archive/ubuntu/linbit-drbd9-stack).
-On **Proxmox VE** nodes, installs `linbit-keyring` and adds the LINBIT public APT repo.
+On **Ubuntu** nodes, the role adds the [LINBIT drbd9-stack Launchpad PPA](https://launchpad.net/~linbit/+archive/ubuntu/linbit-drbd9-stack).
+On **Proxmox VE** nodes, it installs `linbit-keyring` and adds the LINBIT public APT repo.
 
 > **Note:** Plain Debian (without Proxmox VE) is not supported.
 
