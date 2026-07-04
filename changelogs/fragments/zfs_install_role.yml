@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >
+    New ``zfs_install`` role - installs OpenZFS packages and loads the ``zfs``
+    kernel module across Debian, Ubuntu, Red Hat family (stock and UEK
+    kernels), and SUSE family distributions. Extracted from
+    ``linbit.linstor.satellite_install`` so any collection can reuse it.

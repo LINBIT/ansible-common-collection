@@ -1,0 +1,36 @@
+# SPDX-License-Identifier: MIT
+galaxy_info:
+  author: LINBIT
+  description: Install OpenZFS packages and load the zfs kernel module across distributions
+  company: LINBIT
+
+  license: MIT
+
+  platforms:
+    - name: EL
+      versions:
+        - '8'
+        - '9'
+        - '10'
+    - name: Ubuntu
+      versions:
+        - jammy
+        - noble
+        - resolute
+    - name: Debian
+      versions:
+        - bookworm
+        - trixie
+    - name: opensuse
+      versions:
+        - '16.0'
+
+  min_ansible_version: '2.15'
+
+  galaxy_tags:
+    - linbit
+    - zfs
+    - storage
+    - dkms
+
+dependencies: []

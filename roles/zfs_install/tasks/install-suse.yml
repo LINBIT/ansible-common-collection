@@ -1,0 +1,37 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Add openSUSE filesystems repository for ZFS
+  community.general.zypper_repository:
+    repo: "https://download.opensuse.org/repositories/filesystems/{{ ansible_facts['distribution_version'] }}/filesystems.repo"
+    auto_import_keys: true
+    state: present
+
+- name: Install ZFS packages (Zypper)
+  community.general.zypper:
+    name: zfs
+    state: present
+  register: _zfs_install_zfs_zypper
+  until: _zfs_install_zfs_zypper is succeeded
+  retries: 3
+  delay: 10
+
+- name: Check if system uses UEFI
+  ansible.builtin.stat:
+    path: /sys/firmware/efi
+  register: _zfs_install_efi_check
+
+- name: Install ZFS UEFI certificate for Secure Boot
+  community.general.zypper:
+    name: zfs-ueficert
+    state: present
+  when: _zfs_install_efi_check.stat.exists
+  register: _zfs_install_zfs_ueficert
+  until: _zfs_install_zfs_ueficert is succeeded
+  retries: 3
+  delay: 10
+
+- name: Reboot to enroll ZFS signing key in MOK
+  ansible.builtin.reboot:
+  when:
+    - _zfs_install_efi_check.stat.exists
+    - _zfs_install_zfs_ueficert is changed

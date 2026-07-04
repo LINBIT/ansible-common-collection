@@ -1,0 +1,21 @@
+# SPDX-License-Identifier: MIT
+---
+argument_specs:
+  main:
+    short_description: Install OpenZFS packages and load the zfs kernel module
+    description:
+      - Install OpenZFS on Debian, Ubuntu, Red Hat family, and SUSE family distributions,
+        then load the C(zfs) kernel module and persist it across reboots.
+      - On Debian, enables the contrib and backports repositories and builds C(zfs-dkms)
+        against the running kernel headers.
+      - On Ubuntu, installs C(zfsutils-linux) from the main archive.
+      - On Red Hat family distributions with the stock kernel, installs the prebuilt
+        C(kmod-zfs) packages from the OpenZFS kmod repository.
+      - On UEK kernels (Oracle Linux), builds C(zfs-dkms) with a GCC toolset matching
+        the kernel build compiler.
+      - On SUSE family distributions, installs ZFS from the openSUSE filesystems
+        repository and allows unsupported kernel modules. On UEFI systems this can
+        trigger a reboot to enroll the ZFS signing key in MOK.
+      - Proxmox VE ships ZFS out of the box; the role detects an existing installation
+        and skips package work.
+    options: {}

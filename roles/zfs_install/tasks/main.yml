@@ -1,0 +1,68 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Gather OS facts for OS-specific vars
+  ansible.builtin.setup:
+    gather_subset:
+      - "!all"
+      - min
+  when: ansible_facts['os_family'] is not defined
+
+- name: Check if ZFS is already installed
+  ansible.builtin.command:
+    cmd: which zfs
+  register: _zfs_install_check
+  changed_when: false
+  failed_when: false
+
+- name: Install and configure ZFS
+  when: _zfs_install_check.rc != 0
+  block:
+    # Not needed for Ubuntu or Proxmox VE (ships zfsutils-linux)
+    - name: Install ZFS packages (Debian)
+      ansible.builtin.include_tasks: install-debian.yml
+      when:
+        - ansible_facts['distribution'] | lower == 'debian'
+        - not (ansible_facts | linbit.common.is_pve)
+
+    # update_cache: fresh images ship without package lists
+    - name: Install zfsutils-linux (Ubuntu)
+      ansible.builtin.apt:
+        name: zfsutils-linux
+        state: present
+        update_cache: true
+      when: ansible_facts['distribution'] | lower == 'ubuntu'
+      register: _zfs_install_zfsutils
+      until: _zfs_install_zfsutils is succeeded
+      retries: 3
+      delay: 10
+
+    - name: Install ZFS packages (UEK kernel)
+      ansible.builtin.include_tasks: install-uek.yml
+      when:
+        - ansible_facts['os_family'] | lower == 'redhat'
+        - ansible_facts | linbit.common.is_uek
+
+    - name: Install ZFS packages (RedHat)
+      ansible.builtin.include_tasks: install-redhat.yml
+      when:
+        - ansible_facts['os_family'] | lower == 'redhat'
+        - not (ansible_facts | linbit.common.is_uek)
+
+    - name: Install ZFS packages (SUSE)
+      ansible.builtin.include_tasks: install-suse.yml
+      when: ansible_facts['os_family'] | lower == 'suse'
+
+- name: Allow unsupported kernel modules for ZFS (SUSE)
+  ansible.builtin.lineinfile:
+    path: /etc/modprobe.d/10-unsupported-modules.conf
+    regexp: '^allow_unsupported_modules'
+    line: 'allow_unsupported_modules 1'
+    create: true
+    mode: '0644'
+  when: ansible_facts['os_family'] | lower == 'suse'
+
+- name: Load ZFS kernel module and persist across reboots
+  community.general.modprobe:
+    name: zfs
+    state: present
+    persistent: present
