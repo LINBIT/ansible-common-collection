@@ -23,7 +23,7 @@ galaxy_info:
         - trixie
     - name: opensuse
       versions:
-        - '16.0'
+        - all
 
   min_ansible_version: '2.15'
 
