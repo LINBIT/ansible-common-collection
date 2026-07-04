@@ -1,7 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-minor_changes:
-  - >
-    customer_repo - tidy the README: drop trailing periods from table cells,
-    move the staging-repository detail into a dedicated prose section, and
-    collapse the verbose variable descriptions to one line each.

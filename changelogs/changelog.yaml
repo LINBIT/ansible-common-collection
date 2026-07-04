@@ -44,3 +44,87 @@ releases:
       - customer_repo_deb822.yml
       - gpl-filter-plugins.yml
     release_date: '2026-05-21'
+  0.9.9:
+    changes:
+      release_summary: Adds the ``dkms_kernel_headers`` filter plugin and the ``zfs_install``
+        role, alongside README and packaging metadata cleanup.
+      bugfixes:
+        - 'customer_repo, public_repo - gather minimal OS facts when they are not
+          already present, so the roles work when invoked with tag filters that skip
+          the implicit fact-gathering task or under ``gather_facts: false``. Without
+          this, fact-dependent expressions such as the LINBIT distribution string
+          failed with "object of type ''dict'' has no attribute ''os_family''".
+
+          '
+      minor_changes:
+        - 'New ``dkms_kernel_headers`` filter plugin - returns the kernel-header packages
+          DKMS needs to build out-of-tree modules for the running kernel, selecting
+          the correct packages per kernel flavor/edition (generic, aws, cloud-amd64,
+          Proxmox VE, ...) instead of assuming the stock or generic flavor.
+
+          '
+        - 'New ``zfs_install`` role - installs OpenZFS packages and loads the ``zfs``
+          kernel module across Debian, Ubuntu, Red Hat family (stock and UEK kernels),
+          and SUSE family distributions. Extracted from ``linbit.linstor.satellite_install``
+          so any collection can reuse it.
+
+          '
+        - 'README - add Authors section crediting the collection creator and pre-collection
+          Ansible contributors.
+
+          '
+        - 'README - add Installation section with ansible-galaxy collection install
+          commands and a requirements.yml example.
+
+          '
+        - 'README - link role names in the Roles table to their per-role README files
+          for easier navigation.
+
+          '
+        - 'README - overhaul title and intro: rename title to "LINBIT Common Collection"
+          and rewrite the description with cross-links to the other LINBIT Ansible
+          collections.
+
+          '
+        - 'README - replace Dependencies section with a Requirements section listing
+          ansible-core prerequisites; collection-level dependencies are declared in
+          galaxy.yml.
+
+          '
+        - 'README - rewrite License section as Licensing, with per-file MIT/GPL-3.0-or-later
+          coverage where applicable.
+
+          '
+        - 'customer_repo - tidy the README: drop trailing periods from table cells,
+          move the staging-repository detail into a dedicated prose section, and collapse
+          the verbose variable descriptions to one line each.
+
+          '
+        - 'galaxy.yml - point documentation URL at the GitHub repo so Galaxy renders
+          the Documentation link to the same public-facing source as the Repository
+          link.
+
+          '
+        - 'galaxy.yml - point repository and issues URLs at the public GitHub mirror
+          so Galaxy renders contributor and issue links to the public-facing source.
+
+          '
+        - 'galaxy.yml - raise the ``community.general`` dependency floor to ``>=11.0.0``
+          to keep it uniform across the LINBIT collections.
+
+          '
+    fragments:
+      - community_general_floor.yml
+      - dkms_kernel_headers_filter.yml
+      - galaxy_yml_documentation_url.yml
+      - galaxy_yml_public_urls.yml
+      - gather_facts_guard.yml
+      - readme_authors_section.yml
+      - readme_installation.yml
+      - readme_licensing_section.yml
+      - readme_requirements_section.yml
+      - readme_role_links.yml
+      - readme_table_tidy.yml
+      - readme_title_and_intro.yml
+      - zfs_install_role.yml
+    release_date: '2026-07-04'
