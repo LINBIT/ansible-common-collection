@@ -1,0 +1,7 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >
+    customer_repo - register Oracle Linux 10 and later against the native
+    ol10 repository now that it exists on packages.linbit.com, instead of
+    the temporary rhel10 mapping.

@@ -43,15 +43,11 @@
 
 - name: Build LINBIT distribution string  # noqa: jinja[invalid]
   ansible.builtin.set_fact:
-    # OL10+ maps to rhel10 until ol10 mirrors exist on packages.linbit.com.
-    # Revert the ol10+ branch once linbit/linbit-manage-node#13 is resolved.
     _linbit_distribution: >-
       {%- if ansible_facts | linbit.common.is_pve -%}
         proxmox-{{ ansible_facts['distribution_major_version'] | int - 4 }}
       {%- elif ansible_facts['os_family'] | lower == 'debian' -%}
         {{ ansible_facts['distribution'] | lower }}-{{ ansible_facts['distribution_release'] }}
-      {%- elif ansible_facts['distribution'] | lower == 'oraclelinux' and ansible_facts['distribution_major_version'] | int >= 10 -%}
-        rhel{{ ansible_facts['distribution_major_version'] }}
       {%- elif ansible_facts['distribution'] | lower == 'oraclelinux' -%}
         ol{{ ansible_facts['distribution_major_version'] }}
       {%- elif ansible_facts['os_family'] | lower == 'redhat' -%}
