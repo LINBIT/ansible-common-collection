@@ -7,7 +7,6 @@
   register: _linbit_gnupg2_install
   until: _linbit_gnupg2_install is succeeded
   retries: 3
-  delay: 10
 
 - name: Install LINBIT GPG keyring (DNF)  # noqa: package-latest
   ansible.builtin.dnf:
@@ -17,7 +16,6 @@
   register: _linbit_keyring_install
   until: _linbit_keyring_install is succeeded
   retries: 3
-  delay: 10
 
 - name: Import LINBIT GPG key into RPM database
   ansible.builtin.rpm_key:

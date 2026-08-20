@@ -9,7 +9,6 @@
   register: _zfs_install_epel
   until: _zfs_install_epel is succeeded
   retries: 3
-  delay: 10
 
 - name: Install ZFS repository
   ansible.builtin.dnf:
@@ -19,7 +18,6 @@
   register: _zfs_install_zfs_repo
   until: _zfs_install_zfs_repo is succeeded
   retries: 3
-  delay: 10
 
 - name: Disable ZFS kmod repository
   ansible.builtin.command:
@@ -43,7 +41,6 @@
   register: _zfs_install_uek_devel
   until: _zfs_install_uek_devel is succeeded
   retries: 3
-  delay: 10
 
 - name: Detect the compiler the UEK kernel was built with
   ansible.builtin.command:
@@ -73,7 +70,6 @@
   register: _zfs_install_gcc_toolset
   until: _zfs_install_gcc_toolset is succeeded
   retries: 3
-  delay: 10
 
 - name: Build ZFS DKMS module
   ansible.builtin.shell:
@@ -91,4 +87,3 @@
   register: _zfs_install_zfs_utils
   until: _zfs_install_zfs_utils is succeeded
   retries: 3
-  delay: 10

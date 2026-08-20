@@ -8,7 +8,6 @@
   register: _zfs_install_epel_oracle
   until: _zfs_install_epel_oracle is succeeded
   retries: 3
-  delay: 10
 
 - name: Install EPEL on other RPM distros (DNF)
   ansible.builtin.dnf:
@@ -18,7 +17,6 @@
   register: _zfs_install_epel
   until: _zfs_install_epel is succeeded
   retries: 3
-  delay: 10
 
 - name: Install ZFS repository
   ansible.builtin.dnf:
@@ -28,7 +26,6 @@
   register: _zfs_install_zfs_repo
   until: _zfs_install_zfs_repo is succeeded
   retries: 3
-  delay: 10
 
 - name: Disable ZFS DKMS repository
   ansible.builtin.command:
@@ -47,4 +44,3 @@
   register: _zfs_install_zfs_dnf
   until: _zfs_install_zfs_dnf is succeeded
   retries: 3
-  delay: 10

@@ -9,7 +9,6 @@
   register: _zfs_install_gpg
   until: _zfs_install_gpg is succeeded
   retries: 3
-  delay: 10
 
 - name: Enable Debian contrib repository for ZFS
   ansible.builtin.deb822_repository:
@@ -38,7 +37,6 @@
   register: _zfs_install_apt_update
   until: _zfs_install_apt_update is succeeded
   retries: 3
-  delay: 10
 
 - name: Install kernel headers for ZFS DKMS
   ansible.builtin.package:
@@ -47,7 +45,6 @@
   register: _zfs_install_kernel_headers
   until: _zfs_install_kernel_headers is succeeded
   retries: 3
-  delay: 10
 
 - name: Install ZFS packages (APT)
   ansible.builtin.apt:
@@ -59,4 +56,3 @@
   register: _zfs_install_zfs_apt
   until: _zfs_install_zfs_apt is succeeded
   retries: 3
-  delay: 10

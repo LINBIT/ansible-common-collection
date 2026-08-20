@@ -34,7 +34,6 @@
       register: _zfs_install_zfsutils
       until: _zfs_install_zfsutils is succeeded
       retries: 3
-      delay: 10
 
     - name: Install ZFS packages (UEK kernel)
       ansible.builtin.include_tasks: install-uek.yml

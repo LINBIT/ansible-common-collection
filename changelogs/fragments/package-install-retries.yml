@@ -1,0 +1,4 @@
+---
+minor_changes:
+  - customer_repo, public_repo, zfs_install - use the default retry delay on
+    package installation tasks for consistency across collections.
