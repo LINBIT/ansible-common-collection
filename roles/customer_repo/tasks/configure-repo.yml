@@ -167,6 +167,16 @@
          | select('match', _staging_re) | list) if (customer_repo_staging | bool) else [] }}
   when: ansible_facts['os_family'] | lower == 'debian'
 
+- name: Install python3-debian for deb822 repository management (APT)
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
+    update_cache: true
+  when: ansible_facts['os_family'] | lower == 'debian'
+  register: _customer_repo_python_debian
+  until: _customer_repo_python_debian is succeeded
+  retries: 3
+
 - name: Configure LINBIT repository (APT)
   ansible.builtin.deb822_repository:
     name: linbit

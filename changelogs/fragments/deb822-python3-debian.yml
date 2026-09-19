@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+---
+bugfixes:
+  - >
+    customer_repo, public_repo, zfs_install - install python3-debian before
+    calling deb822_repository. The module needs the library on the target,
+    and minimal Debian and Ubuntu cloud images do not ship it, so the first
+    repository task failed with "python3-debian is not installed".

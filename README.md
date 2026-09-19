@@ -11,6 +11,8 @@ Includes LINBIT customer portal registration, public package repository setup fo
 ## Requirements
 
 - ansible-core 2.16 or newer
+- Debian and Ubuntu targets need the `python3-debian` package for the [`deb822_repository`](https://docs.ansible.com/ansible/latest/collections/ansible/builtin/deb822_repository_module.html) module that the `customer_repo`, `public_repo`, and `zfs_install` roles use to write APT sources.
+  The roles install it from the distribution archive before the first repository task, so minimal cloud images that omit it work without preparation.
 
 ## Installation
 

@@ -12,6 +12,15 @@
   retries: 3
   delay: 10
 
+- name: Install python3-debian for deb822 repository management (APT)
+  ansible.builtin.apt:
+    name: python3-debian
+    state: present
+    update_cache: true
+  register: _public_repo_python_debian
+  until: _public_repo_python_debian is succeeded
+  retries: 3
+
 - name: Add LINBIT drbd9-stack PPA
   ansible.builtin.deb822_repository:
     name: linbit-drbd9-stack

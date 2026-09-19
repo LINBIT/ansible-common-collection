@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: MIT
 ---
 # update_cache: fresh images ship without package lists
-- name: Install gpg for repository management (APT)
+- name: Install gpg and python3-debian for repository management (APT)
   ansible.builtin.apt:
-    name: gpg
+    name:
+      - gpg
+      - python3-debian
     state: present
     update_cache: true
-  register: _zfs_install_gpg
-  until: _zfs_install_gpg is succeeded
+  register: _zfs_install_repo_tools
+  until: _zfs_install_repo_tools is succeeded
   retries: 3
 
 - name: Enable Debian contrib repository for ZFS
