@@ -13,11 +13,20 @@
   when: not customer_repo_force_register
   register: _customer_repo_registration_cache
 
+# A run that fails between registration and the repo write leaves the cache
+# behind, so a registered node without a repo file has to go through again
+- name: Check if LINBIT repository is already configured
+  ansible.builtin.stat:
+    path: "{{ _customer_repo_file }}"
+  when: not customer_repo_force_register
+  register: _customer_repo_file_cache
+
 - name: Configure LINBIT customer repository
   ansible.builtin.include_tasks: configure-repo.yml
   when: >-
     customer_repo_force_register | bool or
-    not _customer_repo_registration_cache.stat.exists
+    not _customer_repo_registration_cache.stat.exists or
+    not _customer_repo_file_cache.stat.exists
 
 - name: Install DRBD Proxy license
   ansible.builtin.include_tasks: install-proxy-license.yml
