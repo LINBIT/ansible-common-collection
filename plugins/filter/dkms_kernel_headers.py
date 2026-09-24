@@ -15,7 +15,7 @@ DOCUMENTATION = '''
   short_description: Kernel header packages required to successfully build DKMS modules
   version_added: "0.9.9"
   description:
-    - Returns the kernel-header packages DKMS needs to build out-of-tree modules
+    - Returns the kernel header packages DKMS needs to build out-of-tree modules
       (DRBD, ZFS, SCST) for the running kernel.
     - On the Debian family, returns the flavor/edition metapackage (for example
       C(linux-headers-aws) on Ubuntu or C(linux-headers-cloud-amd64) on Debian) so
@@ -27,7 +27,7 @@ DOCUMENTATION = '''
       the unversioned C(kernel-64k-devel), since its C(+64k) uname suffix is not
       part of the package version.
     - On Proxmox VE, returns C(proxmox-default-headers).
-    - Assumes Debian-family flavors have an unversioned C(linux-headers-<flavor>)
+    - Assumes kernel flavors in the Debian OS family have an unversioned C(linux-headers-<flavor>)
       metapackage, which holds for server and cloud kernels; flavors whose metapackage
       name includes a release suffix (for example Ubuntu C(oem) -> C(linux-headers-oem-24.04))
       are not supported. Returns an empty list on families with no common DKMS header
@@ -50,7 +50,7 @@ EXAMPLES = '''
 
 RETURN = '''
   _value:
-    description: List of kernel-header package names for the running kernel.
+    description: List of kernel header package names for the running kernel.
     type: list
     elements: str
 '''
@@ -64,7 +64,7 @@ def dkms_kernel_headers(facts):
     if 'pve' in kernel:
         return ['proxmox-default-headers']
 
-    # RedHat family: exact-versioned devel matching the running kernel. 64k is
+    # RedHat family: the devel package for the exact running kernel version. 64k is
     # the exception - its uname adds a +64k suffix that isn't in the package
     # version, so the unversioned package name is used.
     if os_family == 'redhat':
@@ -79,7 +79,7 @@ def dkms_kernel_headers(facts):
     exact = 'linux-headers-' + kernel
 
     # Ubuntu metapackage drops the arch (linux-headers-aws); Debian keeps it
-    # (linux-headers-cloud-amd64). Hence the two different version-prefix strips.
+    # (linux-headers-cloud-amd64). Hence the two different version prefix strips.
     if distribution == 'ubuntu':
         flavor = re.sub(r'^[0-9.]+-[0-9]+-', '', kernel)
         return ['linux-headers-' + flavor, exact]

@@ -2,7 +2,7 @@
 ---
 # handlers file for customer_repo
 
-# Auto-import LINBIT GPG keys for RHEL family
+# Import LINBIT GPG keys automatically for RHEL family
 # kind of hacky, but works - Possible with ansible.builtin.dnf?
 - name: Refresh GPG keys (DNF)
   ansible.builtin.command: dnf search bash --assumeyes
@@ -17,7 +17,7 @@
   delay: 10
   listen: refresh_gpg_keys
 
-# Auto-import LINBIT GPG keys for SUSE
+# Import LINBIT GPG keys automatically for SUSE
 - name: Refresh GPG keys (Zypper)
   community.general.zypper:
     name: ""

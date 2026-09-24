@@ -6,7 +6,7 @@ The `linbit.common` Ansible collection providing shared utilities for the [LINBI
 - [`linbit.drbd_reactor`](https://github.com/LINBIT/ansible-drbd_reactor-collection)
 - [`linbit.linstor`](https://github.com/LINBIT/ansible-linstor-collection)
 
-Includes LINBIT customer portal registration, public package repository setup for Ubuntu LTS and Proxmox VE, [DRBD®](https://linbit.com/drbd/) Proxy license retrieval, and kernel-detection filter plugins.
+Includes LINBIT customer portal registration, public package repository setup for Ubuntu LTS and Proxmox VE, [DRBD®](https://linbit.com/drbd/) Proxy license retrieval, and filter plugins that detect the running kernel.
 
 ## Requirements
 
@@ -76,4 +76,4 @@ The following files are licensed under the [GNU General Public License v3.0 or l
 
 Created in 2026 by [Ryan Ronnander](https://github.com/ryan-ronnander) on behalf of [LINBIT](https://linbit.com).
 
-Inspired by pre-collection Ansible contributions from [Matt Kereczman](https://github.com/kermat), [Ryan Ronnander](https://github.com/ryan-ronnander), [Michael Troutman](https://github.com/emteelb), and [Devin Vance](https://github.com/dvance).
+Inspired by earlier Ansible contributions from [Matt Kereczman](https://github.com/kermat), [Ryan Ronnander](https://github.com/ryan-ronnander), [Michael Troutman](https://github.com/emteelb), and [Devin Vance](https://github.com/dvance).

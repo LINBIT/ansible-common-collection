@@ -11,7 +11,7 @@ short_description: Fetch and write the DRBD Proxy license for a registered node
 version_added: "0.9.7"
 description:
   - Fetches the DRBD Proxy license file from the LINBIT customer portal
-    for a node already registered via M(linbit.common.linbit_register_node).
+    for a node already registered with M(linbit.common.linbit_register_node).
   - Reads node identity (nodehash, cluster_id, contract_id, hostname) from
     C(/var/lib/drbd-support/registration.json) written by registration.
   - Writes the decoded license to the configured destination path.
@@ -29,7 +29,7 @@ options:
     default: https://api.linbit.com
     required: false
   force:
-    description: Re-fetch the license even when C(dest) already exists.
+    description: Fetch the license again even when C(dest) already exists.
     type: bool
     default: false
     required: false

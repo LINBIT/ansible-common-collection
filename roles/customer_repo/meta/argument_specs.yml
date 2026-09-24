@@ -24,17 +24,17 @@ argument_specs:
         type: str
         description:
           - Contract ID.
-          - Auto-discovered from the newest (highest ID) active contract on the account.
+          - Found automatically from the newest (highest ID) active contract on the account.
       linbit_cluster_id:
         type: str
         description:
           - Cluster ID.
-          - Auto-discovered from existing registration, most recent cluster, or a new cluster is created.
+          - Found automatically from existing registration, most recent cluster, or a new cluster is created.
       customer_repo_force_register:
         type: bool
         default: false
         description:
-          - Force re-registration even if the node is already registered.
+          - Register the node again even if it is already registered.
       customer_repo_el_minor:
         type: bool
         default: false
@@ -95,7 +95,7 @@ argument_specs:
         type: bool
         default: false
         description:
-          - Fetch C(/etc/drbd-proxy.license) after registration via the
+          - Fetch C(/etc/drbd-proxy.license) after registration with the
             M(linbit.common.linbit_proxy_license) module.
           - Skipped silently unless C(linbit_cluster_id) is also set.
           - Interactive runs prompt with a y/N when this is not set in inventory.

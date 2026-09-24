@@ -37,7 +37,7 @@ options:
     type: str
     required: false
   force:
-    description: Force re-registration even if the node is already registered.
+    description: Register the node again even if it is already registered.
     type: bool
     default: false
   api_url:
@@ -63,7 +63,7 @@ notes:
   - When C(cluster_id) is omitted, the module checks for an existing registration,
     falls back to the most recent cluster on the contract, or creates a new cluster.
   - Consider storing C(username) and C(password) in an Ansible Vault encrypted file
-    rather than in plain-text variables.
+    rather than in plain text variables.
     See L(Ansible Vault,https://docs.ansible.com/ansible/latest/vault_guide/index.html).
 seealso:
   - name: LINBIT Customer Portal
@@ -74,7 +74,7 @@ author:
 '''
 
 EXAMPLES = r'''
-- name: Register node (auto-discover contract and cluster)
+- name: Register node (discover contract and cluster automatically)
   linbit.common.linbit_register_node:
     username: "{{ linbit_username }}"
     password: "{{ linbit_password }}"
@@ -87,7 +87,7 @@ EXAMPLES = r'''
     contract_id: "{{ linbit_contract_id }}"
     cluster_id: "{{ linbit_cluster_id }}"
 
-- name: Force re-registration
+- name: Force a new registration
   linbit.common.linbit_register_node:
     username: "{{ linbit_username }}"
     password: "{{ linbit_password }}"
@@ -332,7 +332,7 @@ def api_register_node(module, api_url, token, contract_id, cluster_id,
 
 
 def resolve_contract(module, api_url, token, contract_id):
-    """Resolve contract_id: use explicit value, or auto-discover from API."""
+    """Resolve contract_id: use explicit value, or discover it from the API."""
     if contract_id:
         return contract_id
 
@@ -347,7 +347,7 @@ def resolve_contract(module, api_url, token, contract_id):
 
 def resolve_cluster(module, api_url, token, contract_id, cluster_id,
                     hostname, mac_addresses):
-    """Resolve cluster_id: use explicit value, or auto-discover from API."""
+    """Resolve cluster_id: use explicit value, or discover it from the API."""
     if cluster_id:
         return cluster_id
 
@@ -432,7 +432,7 @@ def main():
             msg="Node would be registered (check mode)",
         )
 
-    # Step 6: Register the node (API handles re-registration gracefully)
+    # Step 6: Register the node (the API accepts a node that is already registered)
     result = api_register_node(
         module, api_url, token,
         contract_id, cluster_id,

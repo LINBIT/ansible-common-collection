@@ -2,13 +2,13 @@
 
 Register nodes with the LINBIT customer portal and configure LINBIT package repositories.
 
-This role uses the `linbit.common.linbit_register_node` module to authenticate against the LINBIT customer portal API, register nodes, and write OS-appropriate package repository configuration.
+This role uses the `linbit.common.linbit_register_node` module to authenticate against the LINBIT customer portal API, register nodes, and write the package repository configuration for each node's OS.
 
 Use [my.linbit.com](https://my.linbit.com/) to manage credentials, nodes, and clusters.
 See [packages.linbit.com](https://packages.linbit.com/) to register nodes manually using [`linbit-manage-node.py`](https://packages.linbit.com/public/linbit-manage-node.py).
 
 Registration data is cached in `/var/lib/drbd-support/registration.json` for idempotency.
-Re-registering can be forced by setting `customer_repo_force_register: true`.
+Force a new registration by setting `customer_repo_force_register: true`.
 
 ## Requirements
 
@@ -18,8 +18,8 @@ LINBIT customer portal credentials must be provided as Ansible variables (for ex
 |---|---|---|
 | `linbit_username` | yes | LINBIT portal username |
 | `linbit_password` | yes | LINBIT portal password |
-| `linbit_contract_id` | no | Contract ID, auto-discovered from the newest (highest ID) active contract on the account |
-| `linbit_cluster_id` | no | Cluster ID, auto-discovered from existing registration or the most recent cluster, or a new cluster is created |
+| `linbit_contract_id` | no | Contract ID, found automatically from the newest (highest ID) active contract on the account |
+| `linbit_cluster_id` | no | Cluster ID, found automatically from existing registration or the most recent cluster, or a new cluster is created |
 
 If `linbit_username` or `linbit_password` is undefined or empty, the role prompts for it interactively at runtime.
 Prompts run once regardless of how many hosts are in the play.
@@ -29,7 +29,7 @@ The password prompt is suppressed from Ansible output (`no_log: true`).
 
 | Variable | Default | Description |
 |---|---|---|
-| `customer_repo_force_register` | `false` | Force re-registration even if the node is already registered |
+| `customer_repo_force_register` | `false` | Register the node again even if it is already registered |
 | `customer_repo_el_minor` | `false` | Pin Enterprise Linux repo URLs to the specific minor version (for example `9.3`) rather than the major stream |
 | `customer_repo_includes` | `[]` | List of glob patterns; only repos matching at least one pattern are enabled, empty list enables all repos |
 | `customer_repo_default_excludes` | `['drbd-8*', 'drbd-9.0*', 'drbd-proxy-3*']` | Default repo exclusion patterns shipped by the collection; override to `[]` to disable |
