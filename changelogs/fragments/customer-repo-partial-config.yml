@@ -2,7 +2,6 @@
 ---
 bugfixes:
   - >
-    customer_repo - configure the repository again when the node is registered
-    but the repository file is missing. A run that failed after registration,
-    for example while fetching the signing key, left the registration cache in
-    place, and every later run skipped the repository setup.
+    customer_repo - configure the repository when the node is registered but
+    the repository file is missing, so a run that failed after registration
+    no longer causes every later run to skip the repository setup.
