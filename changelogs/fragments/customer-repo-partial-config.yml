@@ -1,7 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-bugfixes:
-  - >
-    customer_repo - configure the repository when the node is registered but
-    the repository file is missing, so a run that failed after registration
-    no longer causes every later run to skip the repository setup.

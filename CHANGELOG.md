@@ -2,17 +2,36 @@
 
 **Topics**
 
-- <a href="#v0-9-9">v0\.9\.9</a>
-    - <a href="#release-summary">Release Summary</a>
+- <a href="#v0-9-10">v0\.9\.10</a>
     - <a href="#minor-changes">Minor Changes</a>
     - <a href="#bugfixes">Bugfixes</a>
-- <a href="#v0-9-8">v0\.9\.8</a>
+- <a href="#v0-9-9">v0\.9\.9</a>
+    - <a href="#release-summary">Release Summary</a>
     - <a href="#minor-changes-1">Minor Changes</a>
-- <a href="#v0-9-7">v0\.9\.7</a>
-    - <a href="#minor-changes-2">Minor Changes</a>
     - <a href="#bugfixes-1">Bugfixes</a>
+- <a href="#v0-9-8">v0\.9\.8</a>
+    - <a href="#minor-changes-2">Minor Changes</a>
+- <a href="#v0-9-7">v0\.9\.7</a>
+    - <a href="#minor-changes-3">Minor Changes</a>
+    - <a href="#bugfixes-2">Bugfixes</a>
     - <a href="#new-modules">New Modules</a>
+
 This changelog describes changes after version 0\.9\.6\.
+
+<a id="v0-9-10"></a>
+## v0\.9\.10
+
+<a id="minor-changes"></a>
+### Minor Changes
+
+* customer\_repo \- register Oracle Linux 10 and later nodes against the native ol10 repository instead of rhel10\.
+* customer\_repo\, public\_repo\, zfs\_install \- retry failed package installations with the default 5 second delay instead of 10 seconds\.
+
+<a id="bugfixes"></a>
+### Bugfixes
+
+* customer\_repo \- configure the repository when the node is registered but the repository file is missing\, so a run that failed after registration no longer causes every later run to skip the repository setup\.
+* customer\_repo\, public\_repo\, zfs\_install \- install python3\-debian before writing APT sources\, so minimal Debian and Ubuntu images no longer fail with \"python3\-debian is not installed\"\.
 
 <a id="v0-9-9"></a>
 ## v0\.9\.9
@@ -22,7 +41,7 @@ This changelog describes changes after version 0\.9\.6\.
 
 Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_install</code> role\, alongside README and packaging metadata cleanup\.
 
-<a id="minor-changes"></a>
+<a id="minor-changes-1"></a>
 ### Minor Changes
 
 * New <code>dkms\_kernel\_headers</code> filter plugin \- returns the kernel\-header packages DKMS needs to build out\-of\-tree modules for the running kernel\, selecting the correct packages per kernel flavor/edition \(generic\, aws\, cloud\-amd64\, Proxmox VE\, \.\.\.\) instead of assuming the stock or generic flavor\.
@@ -38,7 +57,7 @@ Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_ins
 * galaxy\.yml \- point repository and issues URLs at the public GitHub mirror so Galaxy renders contributor and issue links to the public\-facing source\.
 * galaxy\.yml \- raise the <code>community\.general</code> dependency floor to <code>\>\=11\.0\.0</code> to keep it uniform across the LINBIT collections\.
 
-<a id="bugfixes"></a>
+<a id="bugfixes-1"></a>
 ### Bugfixes
 
 * customer\_repo\, public\_repo \- gather minimal OS facts when they are not already present\, so the roles work when invoked with tag filters that skip the implicit fact\-gathering task or under <code>gather\_facts\: false</code>\. Without this\, fact\-dependent expressions such as the LINBIT distribution string failed with \"object of type \'dict\' has no attribute \'os\_family\'\"\.
@@ -46,7 +65,7 @@ Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_ins
 <a id="v0-9-8"></a>
 ## v0\.9\.8
 
-<a id="minor-changes-1"></a>
+<a id="minor-changes-2"></a>
 ### Minor Changes
 
 * customer\_repo \- convert APT repository configuration to deb822 format via <code>ansible\.builtin\.deb822\_repository</code>\, replacing the legacy <code>sources\.list</code> template\.
@@ -55,13 +74,13 @@ Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_ins
 <a id="v0-9-7"></a>
 ## v0\.9\.7
 
-<a id="minor-changes-2"></a>
+<a id="minor-changes-3"></a>
 ### Minor Changes
 
 * customer\_repo \- drop <code>pacemaker\-3</code> from <code>default\_excludes</code> so the Pacemaker 3 repo is enabled by default\.
 * customer\_repo \- optional DRBD Proxy license fetch via the new <code>linbit\_proxy\_license</code> module\, gated on <code>linbit\_cluster\_id</code> being defined and non\-empty\.
 
-<a id="bugfixes-1"></a>
+<a id="bugfixes-2"></a>
 ### Bugfixes
 
 * public\_repo \- warn instead of failing the play on plain Debian nodes \(non\-Proxmox VE\)\, so unrelated repo configuration can proceed\.

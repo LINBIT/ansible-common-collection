@@ -46,8 +46,6 @@ releases:
     release_date: '2026-05-21'
   0.9.9:
     changes:
-      release_summary: Adds the ``dkms_kernel_headers`` filter plugin and the ``zfs_install``
-        role, alongside README and packaging metadata cleanup.
       bugfixes:
         - 'customer_repo, public_repo - gather minimal OS facts when they are not
           already present, so the roles work when invoked with tag filters that skip
@@ -113,6 +111,8 @@ releases:
           to keep it uniform across the LINBIT collections.
 
           '
+      release_summary: Adds the ``dkms_kernel_headers`` filter plugin and the ``zfs_install``
+        role, alongside README and packaging metadata cleanup.
     fragments:
       - community_general_floor.yml
       - dkms_kernel_headers_filter.yml
@@ -128,3 +128,31 @@ releases:
       - readme_title_and_intro.yml
       - zfs_install_role.yml
     release_date: '2026-07-04'
+  0.9.10:
+    changes:
+      bugfixes:
+        - 'customer_repo - configure the repository when the node is registered but
+          the repository file is missing, so a run that failed after registration
+          no longer causes every later run to skip the repository setup.
+
+          '
+        - 'customer_repo, public_repo, zfs_install - install python3-debian before
+          writing APT sources, so minimal Debian and Ubuntu images no longer fail
+          with "python3-debian is not installed".
+
+          '
+      minor_changes:
+        - 'customer_repo - register Oracle Linux 10 and later nodes against the native
+          ol10 repository instead of rhel10.
+
+          '
+        - 'customer_repo, public_repo, zfs_install - retry failed package installations
+          with the default 5 second delay instead of 10 seconds.
+
+          '
+    fragments:
+      - customer-repo-partial-config.yml
+      - deb822-python3-debian.yml
+      - ol10-native-repo.yml
+      - package-install-retries.yml
+    release_date: '2026-09-24'

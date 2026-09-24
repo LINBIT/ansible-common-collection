@@ -1,7 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-bugfixes:
-  - >
-    customer_repo, public_repo, zfs_install - install python3-debian before
-    writing APT sources, so minimal Debian and Ubuntu images no longer fail
-    with "python3-debian is not installed".

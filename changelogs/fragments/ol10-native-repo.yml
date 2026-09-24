@@ -1,6 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-minor_changes:
-  - >
-    customer_repo - register Oracle Linux 10 and later nodes against the
-    native ol10 repository instead of rhel10.

@@ -1,6 +1,0 @@
-# SPDX-License-Identifier: MIT
----
-minor_changes:
-  - >
-    customer_repo, public_repo, zfs_install - retry failed package
-    installations with the default 5 second delay instead of 10 seconds.
