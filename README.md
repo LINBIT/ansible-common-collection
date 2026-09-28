@@ -62,6 +62,7 @@ See [using Ansible collections](https://docs.ansible.com/ansible/latest/collecti
 |---|---|
 | `is_pve` | Returns true when running on a Proxmox VE kernel (`'pve'` in `ansible_kernel`). Used to gate Proxmox-specific tasks. |
 | `is_uek` | Returns true when running on an Oracle Linux UEK kernel (`'uek'` in `ansible_kernel`). Used to choose between RHCK and UEK kernel-devel packages. |
+| `in_network` | Returns the addresses from a list that are inside the network of an address in CIDR notation, for IPv4 and IPv6. |
 
 ## Licensing
 
@@ -70,6 +71,7 @@ This collection is primarily licensed and distributed as a whole under the MIT L
 The following files are licensed under the [GNU General Public License v3.0 or later](https://www.gnu.org/licenses/gpl-3.0.txt), as required by the Ansible community package inclusion rules:
 
 - [`plugins/filter/is_pve.py`](plugins/filter/is_pve.py)
+- [`plugins/filter/in_network.py`](plugins/filter/in_network.py)
 - [`plugins/filter/is_uek.py`](plugins/filter/is_uek.py)
 
 ## Authors
