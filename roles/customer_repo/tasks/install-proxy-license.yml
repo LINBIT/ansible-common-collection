@@ -1,8 +1,20 @@
 # SPDX-License-Identifier: MIT
 ---
+- name: Write DRBD Proxy license from drbd_proxy_license
+  ansible.builtin.copy:
+    content: "{{ drbd_proxy_license }}"
+    dest: "{{ customer_repo_proxy_license_path }}"
+    owner: root
+    group: root
+    mode: '0600'
+  when: drbd_proxy_license | default('') | length > 0
+  diff: false
+  no_log: true
+
 - name: Fetch DRBD Proxy license
   linbit.common.linbit_proxy_license:
     dest: "{{ customer_repo_proxy_license_path }}"
+  when: drbd_proxy_license | default('') | length == 0
   register: _customer_repo_proxy_license
   until: _customer_repo_proxy_license is succeeded
   retries: 3

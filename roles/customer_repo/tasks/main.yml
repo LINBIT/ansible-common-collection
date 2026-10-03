@@ -32,5 +32,5 @@
   ansible.builtin.include_tasks: install-proxy-license.yml
   when:
     - customer_repo_install_proxy_license | bool
-    - linbit_cluster_id is defined
-    - linbit_cluster_id | string | length > 0
+    - (drbd_proxy_license | default('') | length > 0)
+      or (linbit_cluster_id | default('') | string | length > 0)

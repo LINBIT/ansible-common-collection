@@ -36,7 +36,7 @@ The password prompt is suppressed from Ansible output (`no_log: true`).
 | `customer_repo_user_excludes` | `[]` | User-defined repo exclusion patterns, merged with `customer_repo_default_excludes` |
 | `customer_repo_staging` | `false` | Also write a supplemental staging repo file alongside the production repository file (see [Staging repositories](#staging-repositories)) |
 | `customer_repo_staging_repos` | `['drbd-9']` | Anchored glob patterns selecting which repos go in the staging file |
-| `customer_repo_install_proxy_license` | `false` | Fetch the DRBD Proxy license using the `linbit.common.linbit_proxy_license` module; requires `linbit_cluster_id`, otherwise skipped silently (interactive runs prompt y/N when unset) |
+| `customer_repo_install_proxy_license` | `false` | Fetch the DRBD Proxy license using the `linbit.common.linbit_proxy_license` module; requires `linbit_cluster_id` or `drbd_proxy_license`, otherwise skipped silently (interactive runs prompt y/N when unset) |
 | `customer_repo_proxy_license_path` | `/etc/drbd-proxy.license` | Destination path for the fetched DRBD Proxy license file |
 
 ### Staging repositories

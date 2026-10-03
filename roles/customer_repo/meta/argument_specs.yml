@@ -97,7 +97,7 @@ argument_specs:
         description:
           - Fetch C(/etc/drbd-proxy.license) after registration with the
             M(linbit.common.linbit_proxy_license) module.
-          - Skipped silently unless C(linbit_cluster_id) is also set.
+          - Skipped silently unless C(linbit_cluster_id) or C(drbd_proxy_license) is also set.
           - Interactive runs prompt with a y/N when this is not set in inventory.
       customer_repo_proxy_license_path:
         type: str

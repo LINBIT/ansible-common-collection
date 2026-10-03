@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >
+    customer_repo - allow overriding the DRBD Proxy license.
