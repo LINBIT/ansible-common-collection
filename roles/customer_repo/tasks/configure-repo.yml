@@ -52,6 +52,8 @@
         ol{{ ansible_facts['distribution_major_version'] }}
       {%- elif ansible_facts['os_family'] | lower == 'redhat' -%}
         rhel{{ ansible_facts['distribution_major_version'] }}
+      {%- elif ansible_facts['os_family'] | lower == 'suse' and ansible_facts['distribution_major_version'] | int >= 16 -%}
+        sles{{ ansible_facts['distribution_version'] }}
       {%- elif ansible_facts['os_family'] | lower == 'suse' -%}
         sles{{ ansible_facts['distribution_major_version'] }}-sp{{ ansible_facts['distribution_version'].split('.')[1] | default('0') }}
       {%- endif -%}

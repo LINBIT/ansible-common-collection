@@ -1,0 +1,5 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >
+    customer_repo - support SLES 16 and openSUSE Leap 16, which use the sles16.0 repository tree instead of a service pack tree.
