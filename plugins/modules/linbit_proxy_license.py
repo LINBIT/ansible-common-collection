@@ -16,7 +16,7 @@ description:
     C(/var/lib/drbd-support/registration.json) written by registration.
   - Writes the decoded license to the configured destination path.
   - Idempotent - skips the API call when the destination license file
-    already exists, unless C(force) is true.
+    already exists, unless O(force) is true.
 options:
   dest:
     description: Destination path for the DRBD Proxy license file.
@@ -29,12 +29,12 @@ options:
     default: https://api.linbit.com
     required: false
   force:
-    description: Fetch the license again even when C(dest) already exists.
+    description: Fetch the license again even when O(dest) already exists.
     type: bool
     default: false
     required: false
 notes:
-  - Fully idempotent. Skips the API call if the license file already exists unless C(force) is true.
+  - Fully idempotent. Skips the API call if the license file already exists unless O(force) is true.
   - Supports C(check_mode).
 seealso:
   - module: linbit.common.linbit_register_node

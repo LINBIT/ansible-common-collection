@@ -58,11 +58,11 @@ notes:
     contract and cluster IDs but does not register the node.
   - MAC addresses are gathered from C(/sys/class/net/) and filtered to permanent
     Ethernet interfaces only (excluding virtual, bond, and loopback interfaces).
-  - When C(contract_id) is omitted, the module selects the newest active contract
+  - When O(contract_id) is omitted, the module selects the newest active contract
     on the account (highest numeric ID).
-  - When C(cluster_id) is omitted, the module checks for an existing registration,
+  - When O(cluster_id) is omitted, the module checks for an existing registration,
     falls back to the most recent cluster on the contract, or creates a new cluster.
-  - Consider storing C(username) and C(password) in an Ansible Vault encrypted file
+  - Consider storing O(username) and O(password) in an Ansible Vault encrypted file
     rather than in plain text variables.
     See L(Ansible Vault,https://docs.ansible.com/ansible/latest/vault_guide/index.html).
 seealso:

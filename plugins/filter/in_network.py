@@ -14,8 +14,8 @@ DOCUMENTATION = '''
   version_added: "0.9.11"
   description:
     - Returns the entries of the input list that are IP addresses inside the network of
-      C(network), for IPv4 and IPv6.
-    - C(network) is an address in CIDR notation, such as a service IP C(192.168.222.100/24)
+      O(network), for IPv4 and IPv6.
+    - O(network) is an address in CIDR notation, such as a service IP C(192.168.222.100/24)
       or C(2001:db8:222::100/64). Host bits are ignored.
     - Entries that are not IP addresses, or belong to the other address family, are left out.
   options:

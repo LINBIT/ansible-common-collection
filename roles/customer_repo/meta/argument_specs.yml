@@ -63,7 +63,7 @@ argument_specs:
         elements: str
         default: []
         description:
-          - User-defined repo exclusion patterns (anchored), merged with C(customer_repo_default_excludes).
+          - User-defined repo exclusion patterns (anchored), merged with O(customer_repo_default_excludes).
           - Applied to the production repo file only.
       customer_repo_staging:
         type: bool
@@ -71,7 +71,7 @@ argument_specs:
         description:
           - >-
             Additionally write a second repo file (C(linbit-staging.repo) on RPM, C(linbit-staging.sources) on APT)
-            containing staging versions of repos matching C(customer_repo_staging_repos).
+            containing staging versions of repos matching O(customer_repo_staging_repos).
           - The production repo file is left unchanged.
           - >-
             Staging repos are additive and partial, typically shipping only a small subset of packages under
@@ -87,9 +87,9 @@ argument_specs:
           - "drbd-9"
         description:
           - List of glob patterns (anchored) authoritative for the staging repo file.
-          - Repos matching any pattern are written to the staging file when C(customer_repo_staging) is C(true).
+          - Repos matching any pattern are written to the staging file when O(customer_repo_staging) is C(true).
           - >-
-            Excludes (C(customer_repo_default_excludes), C(customer_repo_user_excludes)) do NOT apply to staging,
+            Excludes (O(customer_repo_default_excludes), O(customer_repo_user_excludes)) do NOT apply to staging,
             so a repo that is excluded in production can still be pulled from staging if added here.
       customer_repo_install_proxy_license:
         type: bool
@@ -97,7 +97,7 @@ argument_specs:
         description:
           - Fetch C(/etc/drbd-proxy.license) after registration with the
             M(linbit.common.linbit_proxy_license) module.
-          - Skipped silently unless C(linbit_cluster_id) or C(drbd_proxy_license) is also set.
+          - Skipped silently unless O(linbit_cluster_id) or C(drbd_proxy_license) is also set.
           - Interactive runs prompt with a y/N when this is not set in inventory.
       customer_repo_proxy_license_path:
         type: str
