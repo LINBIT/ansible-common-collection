@@ -156,3 +156,20 @@ releases:
       - ol10-native-repo.yml
       - package-install-retries.yml
     release_date: '2026-09-24'
+  0.9.11:
+    changes:
+      minor_changes:
+        - New filter plugin ``in_network`` selects the IP addresses inside a network,
+          for IPv4 and IPv6.
+        - customer_repo - set ``drbd_proxy_license`` to the content of a DRBD Proxy
+          license to install it directly, without fetching it from the customer portal
+          with ``linbit_cluster_id``.
+        - 'customer_repo - support SLES 16 and openSUSE Leap 16, which use the sles16.0
+          repository tree instead of a service pack tree.
+
+          '
+    fragments:
+      - customer-repo-sles16.yml
+      - drbd-proxy-license-override.yml
+      - in-network-filter.yml
+    release_date: '2026-10-13'

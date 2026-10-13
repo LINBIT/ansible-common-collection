@@ -2,26 +2,38 @@
 
 **Topics**
 
-- <a href="#v0-9-10">v0\.9\.10</a>
+- <a href="#v0-9-11">v0\.9\.11</a>
     - <a href="#minor-changes">Minor Changes</a>
+- <a href="#v0-9-10">v0\.9\.10</a>
+    - <a href="#minor-changes-1">Minor Changes</a>
     - <a href="#bugfixes">Bugfixes</a>
 - <a href="#v0-9-9">v0\.9\.9</a>
     - <a href="#release-summary">Release Summary</a>
-    - <a href="#minor-changes-1">Minor Changes</a>
+    - <a href="#minor-changes-2">Minor Changes</a>
     - <a href="#bugfixes-1">Bugfixes</a>
 - <a href="#v0-9-8">v0\.9\.8</a>
-    - <a href="#minor-changes-2">Minor Changes</a>
-- <a href="#v0-9-7">v0\.9\.7</a>
     - <a href="#minor-changes-3">Minor Changes</a>
+- <a href="#v0-9-7">v0\.9\.7</a>
+    - <a href="#minor-changes-4">Minor Changes</a>
     - <a href="#bugfixes-2">Bugfixes</a>
     - <a href="#new-modules">New Modules</a>
 
 This changelog describes changes after version 0\.9\.6\.
 
+<a id="v0-9-11"></a>
+## v0\.9\.11
+
+<a id="minor-changes"></a>
+### Minor Changes
+
+* New filter plugin <code>in\_network</code> selects the IP addresses inside a network\, for IPv4 and IPv6\.
+* customer\_repo \- set <code>drbd\_proxy\_license</code> to the content of a DRBD Proxy license to install it directly\, without fetching it from the customer portal with <code>linbit\_cluster\_id</code>\.
+* customer\_repo \- support SLES 16 and openSUSE Leap 16\, which use the sles16\.0 repository tree instead of a service pack tree\.
+
 <a id="v0-9-10"></a>
 ## v0\.9\.10
 
-<a id="minor-changes"></a>
+<a id="minor-changes-1"></a>
 ### Minor Changes
 
 * customer\_repo \- register Oracle Linux 10 and later nodes against the native ol10 repository instead of rhel10\.
@@ -41,7 +53,7 @@ This changelog describes changes after version 0\.9\.6\.
 
 Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_install</code> role\, alongside README and packaging metadata cleanup\.
 
-<a id="minor-changes-1"></a>
+<a id="minor-changes-2"></a>
 ### Minor Changes
 
 * New <code>dkms\_kernel\_headers</code> filter plugin \- returns the kernel\-header packages DKMS needs to build out\-of\-tree modules for the running kernel\, selecting the correct packages per kernel flavor/edition \(generic\, aws\, cloud\-amd64\, Proxmox VE\, \.\.\.\) instead of assuming the stock or generic flavor\.
@@ -65,7 +77,7 @@ Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_ins
 <a id="v0-9-8"></a>
 ## v0\.9\.8
 
-<a id="minor-changes-2"></a>
+<a id="minor-changes-3"></a>
 ### Minor Changes
 
 * customer\_repo \- convert APT repository configuration to deb822 format via <code>ansible\.builtin\.deb822\_repository</code>\, replacing the legacy <code>sources\.list</code> template\.
@@ -74,7 +86,7 @@ Adds the <code>dkms\_kernel\_headers</code> filter plugin and the <code>zfs\_ins
 <a id="v0-9-7"></a>
 ## v0\.9\.7
 
-<a id="minor-changes-3"></a>
+<a id="minor-changes-4"></a>
 ### Minor Changes
 
 * customer\_repo \- drop <code>pacemaker\-3</code> from <code>default\_excludes</code> so the Pacemaker 3 repo is enabled by default\.
