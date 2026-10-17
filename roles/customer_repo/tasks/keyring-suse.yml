@@ -21,3 +21,4 @@
   ansible.builtin.rpm_key:
     state: present
     key: /etc/pki/rpm-gpg/RPM-GPG-KEY-linbit
+  when: not (ansible_check_mode and _linbit_keyring_install is changed)

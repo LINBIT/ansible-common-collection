@@ -1,0 +1,15 @@
+# SPDX-License-Identifier: MIT
+---
+bugfixes:
+  - >-
+    customer_repo - check mode on a host that was never registered no longer fails at the GPG key
+    import, the APT repository setup, or the DRBD Proxy license fetch.
+  - >-
+    linbit_proxy_license - check mode no longer fails when the node registration file does not
+    exist yet.
+  - >-
+    public_repo - check mode on Ubuntu no longer fails at the PPA, because the read-only Launchpad
+    lookup now runs in check mode.
+  - >-
+    zfs_install - check mode now detects whether ZFS is installed and no longer fails loading a
+    kernel module that check mode only simulated.

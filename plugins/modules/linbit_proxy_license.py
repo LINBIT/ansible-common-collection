@@ -142,6 +142,13 @@ def main():
         with open(REGISTRATION_FILE) as f:
             reg = json.load(f)
     except (IOError, OSError):
+        # linbit_register_node does not write the file in check mode
+        if module.check_mode:
+            module.exit_json(
+                changed=True,
+                license_path=dest,
+                msg='Would fetch license to %s once the node is registered' % dest,
+            )
         module.fail_json(
             msg='Registration data not found at %s - run linbit_register_node first' % REGISTRATION_FILE)
     except ValueError as e:

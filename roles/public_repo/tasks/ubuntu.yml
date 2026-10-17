@@ -8,6 +8,7 @@
     headers:
       Accept: "application/json"
   register: _launchpad_response
+  check_mode: false
   until: _launchpad_response is succeeded
   retries: 3
   delay: 10
