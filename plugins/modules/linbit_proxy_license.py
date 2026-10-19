@@ -19,7 +19,9 @@ description:
     already exists, unless O(force) is true.
 options:
   dest:
-    description: Destination path for the DRBD Proxy license file.
+    description:
+      - Destination path for the DRBD Proxy license file.
+      - Keep the default, which is where DRBD Proxy reads its license.
     type: path
     default: /etc/drbd-proxy.license
     required: false
@@ -43,13 +45,12 @@ author:
 '''
 
 EXAMPLES = r'''
-- name: Fetch the DRBD Proxy license after registration
+- name: Fetch the DRBD Proxy license to /etc/drbd-proxy.license
   linbit.common.linbit_proxy_license:
-    dest: /etc/drbd-proxy.license
 
-- name: Fetch to a custom path
+- name: Replace an expired DRBD Proxy license
   linbit.common.linbit_proxy_license:
-    dest: /etc/drbd/proxy.license
+    force: true
 '''
 
 RETURN = r'''
