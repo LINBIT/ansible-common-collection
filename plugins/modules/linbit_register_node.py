@@ -47,7 +47,7 @@ options:
   distribution:
     description:
       - LINBIT distribution string identifying the OS family for repo selection
-        (for example C(ubuntu-noble), C(debian-trixie), C(rhel9), C(sles15)).
+        (for example C(ubuntu-noble), C(debian-trixie), C(rhel9), C(sles16.0)).
       - Resolved by the calling role from Ansible facts.
     type: str
     required: true
