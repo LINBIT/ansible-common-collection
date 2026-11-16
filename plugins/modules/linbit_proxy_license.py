@@ -1,9 +1,6 @@
 #!/usr/bin/python
 # SPDX-License-Identifier: MIT
 
-from __future__ import absolute_import, division, print_function
-__metaclass__ = type
-
 DOCUMENTATION = r'''
 ---
 module: linbit_proxy_license
@@ -67,10 +64,7 @@ import os
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import open_url
 
-try:
-    from ansible.module_utils.six.moves.urllib.error import HTTPError, URLError
-except ImportError:
-    from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError, URLError
 
 
 REGISTRATION_FILE = '/var/lib/drbd-support/registration.json'

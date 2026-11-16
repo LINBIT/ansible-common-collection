@@ -1,9 +1,6 @@
 #!/usr/bin/python
 # SPDX-License-Identifier: MIT
 
-from __future__ import absolute_import, division, print_function
-__metaclass__ = type
-
 DOCUMENTATION = r'''
 ---
 module: linbit_register_node
@@ -137,10 +134,7 @@ import socket
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import open_url
 
-try:
-    from ansible.module_utils.six.moves.urllib.error import HTTPError, URLError
-except ImportError:
-    from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError, URLError
 
 REGISTRATION_DIR = '/var/lib/drbd-support'
 REGISTRATION_FILE = os.path.join(REGISTRATION_DIR, 'registration.json')

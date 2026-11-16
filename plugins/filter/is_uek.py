@@ -5,9 +5,6 @@
 # The rest of the linbit.* collections remain MIT-licensed.
 """Filter plugin: detect Oracle Linux UEK kernel."""
 
-from __future__ import absolute_import, division, print_function
-__metaclass__ = type
-
 DOCUMENTATION = '''
   name: is_uek
   short_description: Detect an Oracle Linux UEK kernel

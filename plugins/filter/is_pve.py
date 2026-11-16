@@ -5,9 +5,6 @@
 # The rest of the linbit.* collections remain MIT-licensed.
 """Filter plugin: detect Proxmox VE kernel."""
 
-from __future__ import absolute_import, division, print_function
-__metaclass__ = type
-
 DOCUMENTATION = '''
   name: is_pve
   short_description: Detect a Proxmox VE kernel

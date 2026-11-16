@@ -5,9 +5,6 @@
 # The rest of the linbit.* collections remain MIT-licensed.
 """Filter plugin: kernel header packages for DKMS module builds."""
 
-from __future__ import absolute_import, division, print_function
-__metaclass__ = type
-
 import re
 
 DOCUMENTATION = '''

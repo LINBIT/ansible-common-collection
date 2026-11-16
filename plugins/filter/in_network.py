@@ -5,9 +5,6 @@
 # The rest of the linbit.* collections remain MIT-licensed.
 """Filter plugin: select the addresses that fall inside a network."""
 
-from __future__ import absolute_import, division, print_function
-__metaclass__ = type
-
 DOCUMENTATION = '''
   name: in_network
   short_description: Select the IP addresses that fall inside a network
