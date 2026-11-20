@@ -1,0 +1,9 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Install VDO packages (DNF)
+  ansible.builtin.dnf:
+    name: "{{ ['vdo'] + (['kmod-kvdo'] if _vdo_install_kvdo else []) }}"
+    state: present
+  register: _vdo_install_packages
+  until: _vdo_install_packages is succeeded
+  retries: 3

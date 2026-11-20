@@ -1,0 +1,8 @@
+# SPDX-License-Identifier: MIT
+---
+minor_changes:
+  - >-
+    New ``vdo_install`` role - installs the VDO userspace tools (``vdoformat``, ``vdostats``) and
+    loads the VDO kernel module, the in-tree ``dm-vdo`` on Linux 6.9 and newer or ``kvdo`` from
+    ``kmod-kvdo`` on older Enterprise Linux kernels. It fails before any change on a distribution
+    or kernel without VDO support.

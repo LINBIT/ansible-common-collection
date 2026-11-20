@@ -1,0 +1,35 @@
+# SPDX-License-Identifier: MIT
+---
+- name: Read the default boot kernel
+  ansible.builtin.command:
+    cmd: grubby --default-kernel
+  register: _vdo_install_boot_kernel
+  changed_when: false
+  check_mode: false
+
+# dm-vdo.ko for the running kernel - unversioned resolves to the newest kernel
+- name: Install VDO packages (DNF)
+  ansible.builtin.dnf:
+    name:
+      - vdo
+      - "kernel-uek-modules-core-{{ ansible_facts['kernel'] }}"
+    state: present
+    nobest: true
+    allow_downgrade: true
+  register: _vdo_install_packages
+  until: _vdo_install_packages is succeeded
+  retries: 3
+
+# The EL9 vdo package requires kmod-kvdo, which pulls in the Red Hat compatible kernel as the boot default
+- name: Read the default boot kernel after the install
+  ansible.builtin.command:
+    cmd: grubby --default-kernel
+  register: _vdo_install_new_boot_kernel
+  changed_when: false
+  check_mode: false
+
+- name: Restore the default boot kernel
+  ansible.builtin.command:
+    cmd: grubby --set-default {{ _vdo_install_boot_kernel.stdout }}
+  when: _vdo_install_new_boot_kernel.stdout != _vdo_install_boot_kernel.stdout
+  changed_when: true

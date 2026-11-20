@@ -1,0 +1,19 @@
+# SPDX-License-Identifier: MIT
+---
+argument_specs:
+  main:
+    short_description: Install the VDO userspace tools and load the VDO kernel module
+    description:
+      - Install the C(vdo) package, which provides C(vdoformat) and C(vdostats) for LVM VDO
+        volumes, then load the VDO kernel module and persist it across reboots.
+      - On kernels 6.9 and newer, the role loads the in-tree C(dm-vdo) module.
+      - On Red Hat family distributions with an older stock kernel (Enterprise Linux 9), the
+        role also installs C(kmod-kvdo) and loads the C(kvdo) module.
+      - On Oracle Linux with the Unbreakable Enterprise Kernel (UEK), the role also installs
+        C(kernel-uek-modules-core) at the version of the running kernel, which ships C(dm-vdo).
+      - Supports Enterprise Linux 9 and newer, Oracle Linux UEK 8, Debian 13 and newer (including
+        Proxmox VE 9), and Ubuntu 25.04 and newer.
+      - On a distribution or kernel without VDO support, the role fails before it makes changes
+        and lists the supported platforms. Examples include Ubuntu 24.04, openSUSE Leap and SUSE
+        Linux Enterprise Server (SLES) 16.0, and kernels older than 6.9 without C(kmod-kvdo).
+    options: {}

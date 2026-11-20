@@ -1,0 +1,11 @@
+# SPDX-License-Identifier: MIT
+---
+# update_cache: fresh images ship without package lists
+- name: Install VDO packages (APT)
+  ansible.builtin.apt:
+    name: vdo
+    state: present
+    update_cache: true
+  register: _vdo_install_packages
+  until: _vdo_install_packages is succeeded
+  retries: 3

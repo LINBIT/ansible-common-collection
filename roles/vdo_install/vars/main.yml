@@ -1,0 +1,16 @@
+# SPDX-License-Identifier: MIT
+---
+_vdo_install_kernel_version: "{{ ansible_facts['kernel'].split('-')[0] }}"
+_vdo_install_in_tree: "{{ _vdo_install_kernel_version is version('6.9', '>=') }}"
+_vdo_install_kvdo: >-
+  {{ ansible_facts['os_family'] | lower == 'redhat'
+     and not (ansible_facts | linbit.common.is_uek)
+     and not _vdo_install_in_tree }}
+_vdo_install_module: "{{ 'kvdo' if _vdo_install_kvdo else 'dm-vdo' }}"
+_vdo_install_supported: >-
+  {{ (ansible_facts['os_family'] | lower == 'redhat'
+      and ansible_facts['distribution_major_version'] | int >= 9)
+     or (ansible_facts['distribution'] | lower == 'debian'
+      and ansible_facts['distribution_major_version'] | int >= 13)
+     or (ansible_facts['distribution'] | lower == 'ubuntu'
+      and ansible_facts['distribution_version'] is version('25.04', '>=')) }}

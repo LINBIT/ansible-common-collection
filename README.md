@@ -48,6 +48,7 @@ See [using Ansible collections](https://docs.ansible.com/ansible/latest/collecti
 | [`customer_repo`](roles/customer_repo/README.md) | Register nodes with the LINBIT subscription portal (`my.linbit.com`) |
 | [`public_repo`](roles/public_repo/README.md) | Configure the LINBIT public APT repository for Ubuntu (PPA) and Proxmox VE |
 | [`zfs_install`](roles/zfs_install/README.md) | Install OpenZFS packages and load the `zfs` kernel module across distributions |
+| [`vdo_install`](roles/vdo_install/README.md) | Install the VDO userspace tools and load the VDO kernel module |
 
 ## Modules
 
