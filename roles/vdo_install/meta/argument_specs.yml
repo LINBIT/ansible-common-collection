@@ -11,9 +11,10 @@ argument_specs:
         role also installs C(kmod-kvdo) and loads the C(kvdo) module.
       - On Oracle Linux with the Unbreakable Enterprise Kernel (UEK), the role also installs
         C(kernel-uek-modules-core) at the version of the running kernel, which ships C(dm-vdo).
-      - Supports Enterprise Linux 9 and newer, Oracle Linux UEK 8, Debian 13 and newer (including
-        Proxmox VE 9), and Ubuntu 25.04 and newer.
+      - Supports Enterprise Linux 9 and newer except Oracle Linux 9, Debian 13 and newer
+        (including Proxmox VE 9), and Ubuntu 25.04 and newer.
       - On a distribution or kernel without VDO support, the role fails before it makes changes
-        and lists the supported platforms. Examples include Ubuntu 24.04, openSUSE Leap and SUSE
-        Linux Enterprise Server (SLES) 16.0, and kernels older than 6.9 without C(kmod-kvdo).
+        and lists the supported platforms. Examples include Ubuntu 24.04, Oracle Linux 9, openSUSE
+        Leap and SUSE Linux Enterprise Server (SLES) 16.0, and kernels older than 6.9 without
+        C(kmod-kvdo).
     options: {}

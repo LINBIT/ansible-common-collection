@@ -15,8 +15,9 @@
     fail_msg: >-
       VDO is not supported on {{ ansible_facts['distribution'] }}
       {{ ansible_facts['distribution_version'] }} with kernel {{ ansible_facts['kernel'] }}.
-      The role supports Enterprise Linux 9 and newer, Debian 13 and newer (including Proxmox VE 9),
-      and Ubuntu 25.04 and newer, on Linux 6.9 or newer or the Enterprise Linux 9 kernel with kmod-kvdo.
+      The role supports Enterprise Linux 9 and newer except Oracle Linux 9,
+      Debian 13 and newer (including Proxmox VE 9), and Ubuntu 25.04 and newer,
+      on Linux 6.9 or newer or the Enterprise Linux 9 kernel with kmod-kvdo.
     quiet: true
 
 - name: Install VDO packages (Debian)

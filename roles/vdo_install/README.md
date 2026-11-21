@@ -13,21 +13,18 @@ The role selects the packages and the module per distribution and kernel:
 |---|---|---|
 | Enterprise Linux 9, Red Hat compatible kernel | `vdo`, `kmod-kvdo` | `kvdo` |
 | Enterprise Linux 10, Red Hat compatible kernel | `vdo` | `dm-vdo`, in `kernel-modules-core` |
-| Oracle Linux 9 and 10 with Unbreakable Enterprise Kernel (UEK) 8 | `vdo`, `kernel-uek-modules-core` for the running kernel | `dm-vdo` |
+| Oracle Linux 10 with Unbreakable Enterprise Kernel (UEK) 8 | `vdo`, `kernel-uek-modules-core` for the running kernel | `dm-vdo` |
 | Debian 13 and newer, Proxmox VE 9 and newer | `vdo` | `dm-vdo` |
 | Ubuntu 25.04 and newer | `vdo` from universe | `dm-vdo` |
 
 On UEK, the role installs `kernel-uek-modules-core` at the version of the running kernel.
 An unversioned install would resolve to the newest kernel in the repository, install it, and make it the boot default.
 
-On Oracle Linux 9 with UEK, the Enterprise Linux 9 `vdo` package requires `kmod-kvdo`, which pulls in the Red Hat compatible kernel and makes it the boot default.
-The role sets the boot default back to the kernel it was before the install.
-`vdostats` from that `vdo` 8.2 package cannot read the statistics of `dm-vdo`, so read the usage with `lvs -o name,data_percent,vdo_saving_percent` instead.
-
 The role refuses these platforms:
 
 - Ubuntu 24.04 and older, and Debian 12 and older: the distribution ships no `vdo` package.
 - Red Hat family releases older than 9.
+- Oracle Linux 9, with either kernel: on UEK, its `vdo` package requires `kmod-kvdo`, which installs the Red Hat compatible kernel next to UEK, and a later update of that kernel makes it the boot default.
 - openSUSE Leap 16.0 and SUSE Linux Enterprise Server (SLES) 16.0: the kernel ships `dm-vdo` in `kernel-default-extra`, but the distribution ships no `vdo` package.
 - A kernel older than 6.9 other than the Red Hat compatible kernel of Enterprise Linux 9: it has no `dm-vdo` module.
 
